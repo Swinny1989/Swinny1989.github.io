@@ -10,13 +10,22 @@
         <script src="./resources/js/menuButton.js" type="text/JavaScript"></script>
         <script src="./resources/js/nav.js" type="text/JavaScript"></script>
         <script src="./resources/js/footer.js" type="text/JavaScript"></script>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
         <title>
             Welcome to Katie's K9s
         </title>
     </head>
 
     <body>
-        <script id="replace_with_navbar"> showNav("gallery") </script>
+        <div id="nav-placeholder">
+
+        </div>
+        <script>
+          $(function(){
+            $("#nav-placeholder").load("./components/nav.html");
+          });
+          </script>
+          <!--end of Navigation bar-->
         <div class="row">
             <div class="column">
                 <img src="./resources/images/gallery/1.jpeg" alt="Katie and lily">

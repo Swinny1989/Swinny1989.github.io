@@ -10,13 +10,22 @@
         <script src="./resources/js/menuButton.js" type="text/JavaScript"></script>
         <script src="./resources/js/nav.js" type="text/JavaScript"></script>
         <script src="./resources/js/footer.js" type="text/JavaScript"></script>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
         <title>
             Welcome to Katie's K9s
         </title>
     </head>
 
     <body>
-        <script id="replace_with_navbar"> showNav("contact") </script>
+        <div id="nav-placeholder">
+
+        </div>
+        <script>
+          $(function(){
+            $("#nav-placeholder").load("./components/nav.html");
+          });
+          </script>
+          <!--end of Navigation bar-->
         <div class="bgimg-3">
             <div class="content">
                 <div style="color: #ffffff;background-color:#282E34;text-align:center;padding:50px 80px;text-align: justify; z-index: 20;">
@@ -24,7 +33,7 @@
                         Let's get started, reach out below:
                     </p>
                     <p>
-                        Email: <a href="mailto:katies-k9s@hotmail.com">
+                        <a href="mailto:katies-k9s@hotmail.com">
                             katies-k9s@hotmail.com
                         </a>
                     </p>

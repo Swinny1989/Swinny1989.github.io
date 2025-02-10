@@ -12,6 +12,11 @@ const testimonials = [
         image: "https://scontent.fman6-1.fna.fbcdn.net/v/t39.30808-6/427871620_10159305955981887_279181426754706408_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=ykK8iKdysqUQ7kNvgGA8L1K&_nc_oc=AdhKU4Nkly_yc8p7bGzpuz-QK4Z0BidiDYhKYQJxXFIAogkO9lTeu2Yt5EBiFwmzPqA&_nc_zt=23&_nc_ht=scontent.fman6-1.fna&_nc_gid=Amx9sz6HNwIYqDeMnaZum0T&oh=00_AYA-qDXMb7xCse1REtfjMRXC_uHlkZuSd08LYmRcbSB0hg&oe=67AEE624",
         name: "Gemma Lawson",
         text: "Katie is fantastic with my 2 year old German pointer x Luna. Luna can be wary around strangers but Katie has a wonderful way with her. She is extremely reliable and her boarding service offers a home from home environment where I know Luna will be loved and well looked after"
+    },
+    {
+        image: "https://scontent.fman6-1.fna.fbcdn.net/v/t1.6435-9/95930778_558788788163974_3048609563847688192_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=FY518gpGcRwQ7kNvgE2sLOF&_nc_oc=Adg3PoKmWQfyuGVi6Dxe8IQx0AMv05hky0uk-evpg84kT0cYklz9IO_rQFXuF5RA0_0&_nc_zt=23&_nc_ht=scontent.fman6-1.fna&_nc_gid=A-Qiz4C4nbneDBWpnetEABP&oh=00_AYBnqmDFqeKchoJcCcSbRmbGr_XeIzRyJnAnFY1W2VdMTQ&oe=67D1EEE7",
+        name: "Debra Fennel",
+        text: "We recently left our dog Barney with Katie and her family. From the moment we all met up we felt totally at ease and that we were leaving Barney in the best care and environment. Barney thoroughly enjoyed his stay and made a good friend in Katie's dog lilly ❤️ I can't recommend Katie enough and we have other dates already booked in."
     }
 ];
 
