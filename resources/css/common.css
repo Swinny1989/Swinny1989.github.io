@@ -2,7 +2,7 @@
 
 body, html {
     color: #777;
-    background-color: #353a2f;
+    background-color: #5a6041;
     font-family: 'Raleway', sans-serif;
     margin: 0;
     overflow-x: hidden;
@@ -197,7 +197,7 @@ a:visited {
   .footer {
     position: fixed;
     overflow: hidden;
-    background-color: #353a2f;
+    background-color: #5a6041;
     /* display: block; */
     color: #f2f2f2;
     text-align: center;
