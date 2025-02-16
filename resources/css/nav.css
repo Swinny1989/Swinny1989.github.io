@@ -41,13 +41,15 @@ nav {
         right: 0;
         height: 92vh;
         top: 8vh;
-        background-color: #353a2f;
+        background-color: #5a6041;
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 50%;
         transform: translateX(100%);
         transition: transform 0.5s ease-in;
+        margin-top: 0;
+        padding-top: 16px;
     }
 
     .nav-links li {
@@ -82,6 +84,7 @@ nav {
 
     .nav-links li {
         animation: navLinkFade 0.5s ease forwards 0.5s;
+        padding: 6px;
     }
 }
 
