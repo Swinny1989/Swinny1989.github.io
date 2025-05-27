@@ -204,8 +204,9 @@ a:visited {
     justify-content: center;
     /* text-decoration: none; */
     font-size: 15px;
-    height: 60px;
+    /* height: 60px; */
     padding-top: 8px;
+    padding-bottom: 8px;
     margin-top: -60px;
     bottom: 0;
     width: 100%;
