@@ -110,6 +110,13 @@ a:visited {
     padding: 30px;
   }
 
+  .grid-container-single {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 30px;
+  }
+
   /* Style all font awesome icons */
 .fa {
   padding: 20px;
@@ -179,12 +186,15 @@ a:visited {
     }
   
     .grid-container {
-      /* position: absolute; */
-      /* top: 10%;
-      bottom: 10%; */
       display: grid;
       grid-template-columns: auto;
       gap: 10px;
+      padding: 10px;
+    }
+
+    .grid-container-single {
+      display: grid;
+      grid-template-columns: auto;
       padding: 10px;
     }
   }
