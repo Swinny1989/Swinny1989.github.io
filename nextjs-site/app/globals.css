@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #FAF7F2;
+  --color-forest: #3D5A3E;
+  --color-forest-dark: #2C4230;
+  --color-stone: #8B7355;
+  --color-amber: #C8956C;
+  --color-warm-gray: #6B6560;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: var(--color-cream);
+    color: var(--color-warm-gray);
+    scroll-behavior: smooth;
+  }
+}
