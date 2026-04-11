@@ -1,0 +1,24 @@
+backend:
+  name: github
+  repo: Swinny1989/Swinny1989.github.io
+  branch: main
+  base_url: https://sveltia-cms-auth.pages.dev
+
+media_folder: "nextjs-site/public/images/gallery"
+public_folder: "/images/gallery"
+
+collections:
+  - name: "gallery"
+    label: "Gallery"
+    files:
+      - name: "gallery"
+        label: "Gallery Images"
+        file: "nextjs-site/content/gallery.json"
+        fields:
+          - label: "Images"
+            name: "images"
+            widget: "list"
+            summary: "{{fields.src}}"
+            fields:
+              - { label: "Image", name: "src", widget: "image" }
+              - { label: "Alt text", name: "alt", widget: "string", default: "Dogs at Katie's K9s" }

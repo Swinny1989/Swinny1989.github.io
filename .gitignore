@@ -1,5 +1,16 @@
+# macOS
 .DS_Store
-/utils/node_modules/*
-/utils/new-website-images/*
-/utils/package-lock.json
-/utils/package.json
+
+# Next.js
+nextjs-site/.next/
+nextjs-site/out/
+
+# Dependencies
+nextjs-site/node_modules/
+
+# Env files
+nextjs-site/.env*
+!nextjs-site/.env.example
+
+# Editor
+.vscode/
