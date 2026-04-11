@@ -41,12 +41,12 @@ export default function Nav() {
         </Link>
 
         {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="hidden lg:flex items-center gap-1">
           {links.map(({ href, label }) => (
             <li key={href}>
               <Link
                 href={href}
-                className={`text-sm font-medium transition-colors px-3 py-1 rounded-full ${
+                className={`text-sm font-medium transition-colors px-3 py-1.5 rounded-full whitespace-nowrap ${
                   isActive(href)
                     ? "bg-[#3D5A3E] text-white"
                     : "text-[#6B6560] hover:text-[#3D5A3E]"
@@ -58,9 +58,9 @@ export default function Nav() {
           ))}
         </ul>
 
-        {/* Mobile burger */}
+        {/* Mobile/tablet burger */}
         <button
-          className="md:hidden flex flex-col gap-1.5 p-2"
+          className="lg:hidden flex flex-col gap-1.5 p-2"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
           aria-expanded={open}
@@ -77,9 +77,9 @@ export default function Nav() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile/tablet menu */}
       {open && (
-        <div className="md:hidden bg-[#FAF7F2] border-t border-stone-200 px-4 pb-4">
+        <div className="lg:hidden bg-[#FAF7F2] border-t border-stone-200 px-4 pb-4">
           <ul className="flex flex-col gap-1 pt-2">
             {links.map(({ href, label }) => (
               <li key={href}>
