@@ -64,7 +64,7 @@ export default function Contact() {
   return (
     <div className="max-w-lg mx-auto px-4 sm:px-6 py-14 sm:py-20">
       <div className="text-center mb-12">
-        <h1 className="font-serif text-4xl sm:text-5xl text-[#3D5A3E] mb-4">Get in Touch</h1>
+        <h1 className="font-serif text-4xl sm:text-5xl text-[#3D5A3E] mb-6">Get in Touch</h1>
         <p className="text-[#6B6560] text-lg">
           We&apos;d love to hear from you. Reach out however suits you best.
         </p>

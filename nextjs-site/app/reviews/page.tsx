@@ -11,7 +11,7 @@ export default function Reviews() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
       <div className="text-center mb-12">
-        <h1 className="font-serif text-4xl sm:text-5xl text-[#3D5A3E] mb-4">Reviews</h1>
+        <h1 className="font-serif text-4xl sm:text-5xl text-[#3D5A3E] mb-6">Reviews</h1>
         <p className="text-[#6B6560] text-lg">
           Don&apos;t just take our word for it — here&apos;s what our customers say.
         </p>
