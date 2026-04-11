@@ -4,7 +4,7 @@
       "icon": "/images/pet-shelter.png",
       "iconAlt": "Home boarding icon",
       "title": "Home Dog Boarding",
-      "description": "A home from home for your beloved dog on the outskirts of Congleton, bordering the Cheshire countryside. They'll be welcomed and cared for in our family home with an enclosed garden and beautiful walks personalised to their needs.",
+      "description": "Our home boarding provides a calm home from home stay where your dog lives as part of the family, enjoying their usual routines, daily walks, enrichment and plenty of love and attention while you’re away",
       "pricing": [
         { "label": "Per night (up to 24 hours)", "price": "£45" },
         { "label": "Per night (stays of 7+ days)", "price": "£40" }
@@ -22,7 +22,7 @@
       "icon": "/images/dog-house.png",
       "iconAlt": "Day care icon",
       "title": "Day Care",
-      "description": "Whether you have a long day in the office or some exciting social plans, rest assured your furry family member will be welcomed into our home for a day filled with enrichment, stimulation and countryside walks.",
+      "description": "Our ad-hoc doggy day care offers flexible, occasional care for days when you need a little extra help, giving your dog a safe, fun and relaxed place to spend the day with plenty of walks, play, enrichment and companionship",
       "pricing": [
         { "label": "Up to 10 hours (8am – 6pm)", "price": "£30" }
       ],
@@ -32,5 +32,19 @@
   ],
   "otherServices": {
     "description": "Katie's K9s also offers an array of other services including wedding chaperone, pet taxi and vet transportation. Whatever your requirements, please don't hesitate to get in touch for more details and a quote."
+  },
+  "criteria": {
+    "intro": "To ensure the safety, wellbeing and happiness of every dog in our care, we ask that all dogs meet the following criteria:",
+    "items": [
+      "Fully vaccinated and up to date with routine vaccinations",
+      "Up to date with flea and worming treatments",
+      "Friendly and happy to socialise with other dogs",
+      "Comfortable in a home environment and able to settle indoors",
+      "Toilet trained",
+      "Non-destructive in the home",
+      "Not showing aggressive behaviour towards people or other dogs",
+      "Comfortable around young children"
+    ],
+    "closing": "At Katie's K9s, we intentionally care for only a small number of dogs at any one time. This helps us to maintain a calm and relaxed environment where dogs can settle comfortably and receive plenty of individual interaction, enrichment and affection throughout the day. It also means we can get to know each dog's personality, routine and needs so that their stay truly feels like a home-from-home experience.\n\nIf you have any questions about the process or would like to enquire about availability, we would love to hear from you."
   }
 }

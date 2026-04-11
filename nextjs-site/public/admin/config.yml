@@ -67,3 +67,13 @@ collections:
             widget: "object"
             fields:
               - { label: "Description", name: "description", widget: "text" }
+          - label: "Our Criteria"
+            name: "criteria"
+            widget: "object"
+            fields:
+              - { label: "Intro text", name: "intro", widget: "text" }
+              - label: "Criteria items"
+                name: "items"
+                widget: "list"
+                field: { label: "Item", name: "item", widget: "string" }
+              - { label: "Closing text", name: "closing", widget: "text" }

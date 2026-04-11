@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function Services() {
-  const { services, otherServices } = servicesData;
+  const { services, otherServices, criteria } = servicesData;
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
@@ -66,8 +66,25 @@ export default function Services() {
         ))}
       </div>
 
+      {/* Criteria */}
+      <div className="bg-white rounded-2xl shadow-sm border border-stone-100 p-8 mt-6">
+        <h2 className="font-serif text-2xl text-[#3D5A3E] mb-4">Our Criteria</h2>
+        <p className="text-[#6B6560] leading-relaxed mb-4">{criteria.intro}</p>
+        <ul className="space-y-2 mb-6">
+          {criteria.items.map((item) => (
+            <li key={item} className="flex items-start gap-2 text-[#6B6560]">
+              <span className="text-[#3D5A3E] mt-1">✓</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        {criteria.closing.split("\n\n").map((para, i) => (
+          <p key={i} className="text-[#6B6560] leading-relaxed mb-3">{para}</p>
+        ))}
+      </div>
+
       {/* Other services */}
-      <div className="bg-white rounded-2xl shadow-sm border border-stone-100 p-8 flex flex-col sm:flex-row items-center gap-6">
+      <div className="bg-white rounded-2xl shadow-sm border border-stone-100 p-8 flex flex-col sm:flex-row items-center gap-6 mt-6">
         <Image src="/images/dog.png" alt="Other services icon" width={64} height={64} className="shrink-0" />
         <div className="text-center sm:text-left">
           <h2 className="font-serif text-2xl text-[#3D5A3E] mb-2">Other Services</h2>

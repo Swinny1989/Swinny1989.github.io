@@ -39,7 +39,7 @@ export default function Home() {
             WELCOME TO KATIE&apos;S K9s
           </h1>
           <p className="text-white/90 text-lg sm:text-xl mb-8 drop-shadow">
-            A warm, loving home-from-home for your dog in Congleton, Cheshire.
+            A warm, loving home from home for your dog in Congleton, Cheshire
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
@@ -70,47 +70,46 @@ export default function Home() {
           />
         </div>
         <h2 className="font-serif text-3xl sm:text-4xl text-[#3D5A3E] mb-6">
-          A home your dog will love
+          Welcome to a place where your dog is truly part of the family
         </h2>
         <div className="space-y-4 text-[#6B6560] text-base sm:text-lg leading-relaxed text-left sm:text-center">
           <p>
-            Katie&apos;s K9s was founded in 2024 when Katie made the decision to leave
-            the corporate world and follow her true passion — creating a safe,
-            loving, homely place for dogs to stay.
+            We offer a calm, loving home environment designed to help your dog feel safe, settled, and completely at ease. 
+            Whether they&apos;re with us for the day or a longer stay, every dog has their own dedicated space for rest and 
+            downtime, balanced with plenty of play, enrichment, and affection throughout the day.
           </p>
           <p>
-            Our mission is simple: to give your dog the comfort, care and
-            companionship they deserve whilst you&apos;re away. It&apos;s their holiday
-            too, after all!
+            We keep our groups small so we can give each dog the individual attention they deserve, 
+            taking time to understand their routines, personalities, and needs. Our days are thoughtfully 
+            structured to create a relaxed, happy atmosphere where dogs can socialise, explore, and unwind at their own pace.
           </p>
           <p>
-            Whether it&apos;s for a day at doggy day care or a longer stay, we
-            provide a warm, relaxed environment where every dog can feel settled
-            and at home.
+            Your dog&apos;s wellbeing is at the heart of everything we do, and we pride ourselves on providing 
+            a safe, secure, and genuinely caring experience, giving you complete peace of mind while you&apos;re apart.
           </p>
           <p>
-            We&apos;re proud to be a high-standard licensed home boarder{" "}
-            <span className="text-[#3D5A3E] font-medium">(Licence No: CE/HB232)</span>.
-            Fully insured, DBS checked and trained in canine first aid — giving
-            you complete peace of mind.
+            We're proud to be a high-standard licensed home boarder 
+            <span className="text-[#3D5A3E] font-medium"> (Licence No: CE/HB232)</span>.
+            Fully insured, DBS checked and trained in canine first aid, giving you complete 
+            peace of mind.
           </p>
         </div>
       </section>
 
       {/* Divider image */}
-      <section className="relative h-64 sm:h-80 overflow-hidden">
+      <section className="relative h-[32rem] sm:h-[40rem] overflow-hidden">
         <Image
           src="/images/bgimg-2.jpg"
           alt="Dogs enjoying the countryside"
           fill
-          className="object-cover object-center"
+          className="object-cover object-[center_30%]"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-[#3D5A3E]/50" />
         <div className="relative z-10 h-full flex items-center justify-center px-4">
           <p className="font-serif text-white text-xl sm:text-2xl md:text-3xl text-center italic max-w-2xl drop-shadow">
-            &ldquo;Every dog is different — we tailor our care to each dog&apos;s needs
-            and routine.&rdquo;
+            Every dog is different, we tailor our care to each dog&apos;s needs
+            and routine
           </p>
         </div>
       </section>
