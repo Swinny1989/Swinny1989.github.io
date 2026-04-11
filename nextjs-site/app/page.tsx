@@ -153,7 +153,7 @@ export default function Home() {
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-[#2C4230]/60" />
-        <div className="relative z-10 h-full flex flex-col items-center justify-center gap-4 px-4 text-center">
+        <div className="relative z-10 h-full flex flex-col items-center justify-end gap-4 px-4 text-center pb-16">
           <h2 className="font-serif text-white text-2xl sm:text-3xl font-bold drop-shadow">
             Ready to book a stay?
           </h2>
