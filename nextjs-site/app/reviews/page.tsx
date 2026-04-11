@@ -1,96 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import reviewsData from "@/content/reviews.json";
 
 export const metadata: Metadata = {
   title: "Reviews – Katie's K9s",
   description: "Read what our customers say about Katie's K9s dog boarding and day care in Congleton.",
 };
-
-const reviews = [
-  {
-    title: "⭐️⭐️⭐️⭐️⭐️ 10/10 – Absolutely Amazing!",
-    body: [
-      "Katie's K9s is absolutely amazing! I felt so reassured leaving my two little dogs in Katie's care while my family and I took a short break. I got sent regular updates and photos, which I really appreciated! 🥰 It was so lovely to see what they were up to and know they were happy and well looked after.",
-      "Katie is incredibly professional, clearly loves what she does, and treats the dogs like her own.",
-      "I wouldn't hesitate to recommend her to anyone looking for a reliable, caring, and trustworthy dog boarder. 10/10 from me!",
-    ],
-    author: "Gemma Simpkins",
-  },
-  {
-    title: "Absolutely fantastic experience!",
-    body: [
-      "Lola was so well looked after – it truly was a home away from home for her. Katie sent daily updates and lovely photos, which really put my mind at ease. It was clear that Lola was treated like one of the family, and she came home happy and relaxed.",
-      "Highly recommend Katie if you're looking for a warm, caring, and reliable family environment for your dog. I wouldn't hesitate to book again!",
-    ],
-    author: "Helen Nicholls",
-  },
-  {
-    title: "Fantastic week-long stay",
-    body: [
-      "Katie has looked after our two dogs for week long stays in her home. They had the best time! We have two dogs who have never stayed in kennels, they are very nervy, I was so happy to find Katie's home boarding service. Her attention to their diets, routine, quirks 🙂 was fantastic.",
-      "We received lots of fab images of the dogs out playing and walking in the countryside... in fact I am thinking of booking myself in for a weeks holiday with Katie! 🙂",
-      "Very happy to 100% recommend Katie's service, she looks after the dogs as if they were her own. Thank you Katie! Great job xxx",
-    ],
-    author: "Kay Gilmore",
-  },
-  {
-    title: "Humphrey absolutely loves it!",
-    body: [
-      "I would highly recommend Katie's K9's! Our cockapoo, Humphrey, absolutely loves staying over! He gets so excited when he goes and is absolutely shattered when he comes home, which is amazing as he has so much energy! If you need a dog sitter for just a day, just one night or a long stay, Katie is your person! 🥰",
-    ],
-    author: "Autumn Tamara",
-  },
-  {
-    title: "A lovely welcoming home for any dog",
-    body: [
-      "I'm so happy I found Katie. I have always used a local dog kennels for my dog Honey, but now she's getting a bit older I wanted her boarded in a home. Katie looked after Honey for a week and I had daily updates and photos. I could see how well Honey was looked after and how happy she was with lots of exercise. A lovely welcoming home for any dog. Thanks Katie, Honey will be back soon 😊",
-    ],
-    author: "Liam Powell",
-  },
-  {
-    title: "Wonderful with our young vizsla",
-    body: [
-      "Our 10 month old vizsla Rufus stayed with Katie for a week, we were very nervous about leaving him but she put us at ease and was wonderful with him. He seemed to be really enjoying himself and Katie kindly sent us regular updates and photos. Would highly recommend her to anyone, she was wonderful.",
-    ],
-    author: "Linda Bilsborough",
-  },
-  {
-    title: "My spaniels just love going to hers",
-    body: [
-      "I would highly recommend Katie, she is so loving and caring with my two spaniels and they just love going to hers. She provides them a home from home when we need to leave them, we always get loads of updates and pictures of them having a fab time. It definitely makes leaving them much easier and gives great peace of mind that they are in an environment they love. We are so glad to have found you Katie!",
-    ],
-    author: "Ildiko Horvath",
-  },
-  {
-    title: "Thoughtful home away from home care",
-    body: [
-      "Katie looked after our working cocker spaniel for three days and nights and Bee had an absolutely amazing time! I really appreciate the regular updates and photos as it makes being away so much easier, especially when you can see what great times they're having!",
-      "It was a hot weekend but Katie had lots of hot weather activities to keep them entertained and went out for early dog walks to avoid the heat — which just goes to highlight the really thoughtful home away from home care she provides.",
-    ],
-    author: "Rosie Green",
-  },
-  {
-    title: "A true home from home",
-    body: [
-      "I could not recommend Katie's K9s enough. Juno had the best holiday, loved the whole family & Katie kept us updated & took some lovely pictures. A true home from home. Thank you so much x",
-    ],
-    author: "Paul Gregory",
-  },
-  {
-    title: "Looks after them like her own",
-    body: [
-      "I couldn't recommend Katie enough — she has always been great with our dogs and looks after them like her own. Would recommend her to anyone looking for a safe, caring environment for their dogs when away from home 👍",
-    ],
-    author: "Rob Jackson-Thompson",
-  },
-  {
-    title: "Barney made a great friend in Lily",
-    body: [
-      "We recently left our dog Barney with Katie and her family. From the moment we all met up we felt totally at ease and that we were leaving Barney in the best care and environment. Barney thoroughly enjoyed his stay and made a good friend in Katie's dog Lily ❤️ I can't recommend Katie enough and we have other dates already booked in.",
-    ],
-    author: "Debra Fennel",
-  },
-];
 
 export default function Reviews() {
   return (
@@ -103,7 +18,7 @@ export default function Reviews() {
       </div>
 
       <div className="space-y-6">
-        {reviews.map(({ title, body, author }) => (
+        {reviewsData.reviews.map(({ title, body, author }) => (
           <div
             key={author}
             className="bg-white rounded-2xl shadow-sm border border-stone-100 p-6 sm:p-8"
@@ -112,7 +27,7 @@ export default function Reviews() {
               <h3 className="font-serif text-lg text-[#3D5A3E] mb-3">{title}</h3>
             )}
             <div className="space-y-3">
-              {body.map((para, i) => (
+              {body.split("\n\n").map((para, i) => (
                 <p key={i} className="text-[#6B6560] leading-relaxed">
                   {para}
                 </p>

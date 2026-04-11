@@ -8,8 +8,8 @@
   --color-amber: #C8956C;
   --color-warm-gray: #6B6560;
 
-  --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
 }
 
 @layer base {
@@ -18,9 +18,5 @@
     background-color: var(--color-cream);
     color: var(--color-warm-gray);
     scroll-behavior: smooth;
-  }
-
-  h1, h2, h3 {
-    font-family: var(--font-serif);
   }
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import servicesData from "@/content/services.json";
 
 export const metadata: Metadata = {
   title: "Services – Katie's K9s",
@@ -8,38 +9,9 @@ export const metadata: Metadata = {
     "Home dog boarding and day care services in Congleton, Cheshire. Licensed, insured and DBS checked.",
 };
 
-const services = [
-  {
-    icon: "/images/pet-shelter.png",
-    iconAlt: "Home boarding icon",
-    title: "Home Dog Boarding",
-    description:
-      "A home from home for your beloved dog on the outskirts of Congleton, bordering the Cheshire countryside. They'll be welcomed and cared for in our family home with an enclosed garden and beautiful walks personalised to their needs.",
-    pricing: [
-      { label: "Per night (up to 24 hours)", price: "£45" },
-      { label: "Per night (stays of 7+ days)", price: "£40" },
-    ],
-    additionalPricing: {
-      heading: "Additional dogs from the same household",
-      items: [
-        { label: "Per night (up to 24 hours)", price: "£35" },
-        { label: "Per night (stays of 7+ days)", price: "£30" },
-      ],
-    },
-    note: "Additional charges apply for puppies under 12 months.",
-  },
-  {
-    icon: "/images/dog-house.png",
-    iconAlt: "Day care icon",
-    title: "Day Care",
-    description:
-      "Whether you have a long day in the office or some exciting social plans, rest assured your furry family member will be welcomed into our home for a day filled with enrichment, stimulation and countryside walks.",
-    pricing: [{ label: "Up to 10 hours (8am – 6pm)", price: "£30" }],
-    note: "Additional charges apply for puppies under 12 months.",
-  },
-];
-
 export default function Services() {
+  const { services, otherServices } = servicesData;
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
       <div className="text-center mb-12">
@@ -99,11 +71,7 @@ export default function Services() {
         <Image src="/images/dog.png" alt="Other services icon" width={64} height={64} className="shrink-0" />
         <div className="text-center sm:text-left">
           <h2 className="font-serif text-2xl text-[#3D5A3E] mb-2">Other Services</h2>
-          <p className="text-[#6B6560] leading-relaxed mb-4">
-            Katie&apos;s K9s also offers an array of other services including wedding
-            chaperone, pet taxi and vet transportation. Whatever your requirements,
-            please don&apos;t hesitate to get in touch for more details and a quote.
-          </p>
+          <p className="text-[#6B6560] leading-relaxed mb-4">{otherServices.description}</p>
           <Link
             href="/contact"
             className="inline-block bg-[#3D5A3E] hover:bg-[#2C4230] text-white font-medium px-6 py-2.5 rounded-full transition-colors text-sm"

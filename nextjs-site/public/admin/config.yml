@@ -22,3 +22,47 @@ collections:
             fields:
               - { label: "Image", name: "src", widget: "image" }
               - { label: "Alt text", name: "alt", widget: "string", default: "Dogs at Katie's K9s" }
+
+  - name: "reviews"
+    label: "Reviews"
+    files:
+      - name: "reviews"
+        label: "Customer Reviews"
+        file: "nextjs-site/content/reviews.json"
+        fields:
+          - label: "Reviews"
+            name: "reviews"
+            widget: "list"
+            summary: "{{fields.author}}"
+            fields:
+              - { label: "Heading", name: "title", widget: "string" }
+              - { label: "Review text", name: "body", widget: "text" }
+              - { label: "Customer name", name: "author", widget: "string" }
+
+  - name: "services"
+    label: "Services"
+    files:
+      - name: "services"
+        label: "Services & Pricing"
+        file: "nextjs-site/content/services.json"
+        fields:
+          - label: "Services"
+            name: "services"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Note (small print)", name: "note", widget: "string", required: false }
+              - label: "Pricing"
+                name: "pricing"
+                widget: "list"
+                summary: "{{fields.label}}"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Price", name: "price", widget: "string" }
+          - label: "Other Services"
+            name: "otherServices"
+            widget: "object"
+            fields:
+              - { label: "Description", name: "description", widget: "text" }

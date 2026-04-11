@@ -36,7 +36,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50" />
         <div className="relative z-10 text-center px-4 max-w-2xl mx-auto">
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-white drop-shadow-lg leading-tight mb-4">
-            Welcome to Katie&apos;s K9s
+            WELCOME TO KATIE&apos;S K9s
           </h1>
           <p className="text-white/90 text-lg sm:text-xl mb-8 drop-shadow">
             A warm, loving home-from-home for your dog in Congleton, Cheshire.
@@ -64,9 +64,9 @@ export default function Home() {
           <Image
             src="/images/Round.png"
             alt="Katie's K9s logo"
-            width={140}
-            height={140}
-            className="rounded-full shadow-md"
+            width={320}
+            height={320}
+            className="rounded-full"
           />
         </div>
         <h2 className="font-serif text-3xl sm:text-4xl text-[#3D5A3E] mb-6">
