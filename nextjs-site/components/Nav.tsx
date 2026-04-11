@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const links = [
@@ -17,16 +18,26 @@ const links = [
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-[#FAF7F2]/95 backdrop-blur-sm border-b border-stone-200 shadow-sm">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
         {/* Logo */}
-        <Link
-          href="/"
-          className="font-serif text-xl font-bold text-[#3D5A3E] tracking-wide"
-        >
-          Katie&apos;s K9s
+        <Link href="/" className="flex items-center gap-2.5">
+          <Image
+            src="/images/Round.png"
+            alt="Katie's K9s logo"
+            width={36}
+            height={36}
+            className="rounded-full"
+          />
+          <span className="font-serif text-xl font-bold text-[#3D5A3E] tracking-wide">
+            Katie&apos;s K9s
+          </span>
         </Link>
 
         {/* Desktop links */}
@@ -35,10 +46,10 @@ export default function Nav() {
             <li key={href}>
               <Link
                 href={href}
-                className={`text-sm font-medium transition-colors hover:text-[#3D5A3E] ${
-                  pathname === href
-                    ? "text-[#3D5A3E] border-b-2 border-[#3D5A3E] pb-0.5"
-                    : "text-[#6B6560]"
+                className={`text-sm font-medium transition-colors px-3 py-1 rounded-full ${
+                  isActive(href)
+                    ? "bg-[#3D5A3E] text-white"
+                    : "text-[#6B6560] hover:text-[#3D5A3E]"
                 }`}
               >
                 {label}
@@ -76,9 +87,9 @@ export default function Nav() {
                   href={href}
                   onClick={() => setOpen(false)}
                   className={`block py-3 px-2 text-base font-medium rounded-lg transition-colors ${
-                    pathname === href
-                      ? "text-[#3D5A3E] bg-green-50"
-                      : "text-[#6B6560] hover:text-[#3D5A3E] hover:bg-green-50"
+                    isActive(href)
+                      ? "text-white bg-[#3D5A3E]"
+                      : "text-[#6B6560] hover:text-white hover:bg-[#3D5A3E]"
                   }`}
                 >
                   {label}
