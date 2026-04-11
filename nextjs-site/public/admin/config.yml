@@ -3,7 +3,6 @@ backend:
   repo: Swinny1989/Swinny1989.github.io
   branch: main
   base_url: https://sveltia-cms-auth.tom-ec0.workers.dev
-  app_id: Ov23liSLUDjEAwonxqQ4
 
 media_folder: "nextjs-site/public/images/gallery"
 public_folder: "/images/gallery"
