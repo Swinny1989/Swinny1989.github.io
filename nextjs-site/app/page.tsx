@@ -144,7 +144,7 @@ export default function Home() {
       </section>
 
       {/* CTA banner */}
-      <section className="relative h-56 sm:h-64 overflow-hidden">
+      <section className="relative h-[28rem] sm:h-[36rem] overflow-hidden">
         <Image
           src="/images/bgimg-4.jpg"
           alt="Dogs playing"
