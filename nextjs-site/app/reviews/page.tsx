@@ -3,8 +3,8 @@ import Link from "next/link";
 import reviewsData from "@/content/reviews.json";
 
 export const metadata: Metadata = {
-  title: "Reviews – Katie's K9s",
-  description: "Read what our customers say about Katie's K9s dog boarding and day care in Congleton.",
+  title: "Reviews – Dog Boarding Congleton | Katie's K9s",
+  description: "Read five-star reviews from dog owners across Cheshire about Katie's K9s home dog boarding and day care in Congleton.",
 };
 
 export default function Reviews() {
@@ -13,7 +13,7 @@ export default function Reviews() {
       <div className="text-center mb-12">
         <h1 className="font-serif text-4xl sm:text-5xl text-[#3D5A3E] mb-6">Reviews</h1>
         <p className="text-[#6B6560] text-lg">
-          Don&apos;t just take our word for it — here&apos;s what our customers say.
+          What dog owners across Cheshire say about Katie&apos;s K9s
         </p>
       </div>
 

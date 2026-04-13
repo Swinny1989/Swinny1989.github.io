@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact – Katie's K9s",
-  description: "Get in touch with Katie's K9s for dog boarding and day care in Congleton, Cheshire.",
+  title: "Contact – Dog Boarding Congleton | Katie's K9s",
+  description: "Get in touch with Katie's K9s to book home dog boarding or day care in Congleton, Cheshire. Call, WhatsApp or email us.",
 };
 
 const contactLinks = [

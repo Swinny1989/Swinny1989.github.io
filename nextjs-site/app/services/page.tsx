@@ -4,9 +4,9 @@ import Link from "next/link";
 import servicesData from "@/content/services.json";
 
 export const metadata: Metadata = {
-  title: "Services – Katie's K9s",
+  title: "Dog Boarding & Day Care Services Congleton | Katie's K9s",
   description:
-    "Home dog boarding and day care services in Congleton, Cheshire. Licensed, insured and DBS checked.",
+    "Home dog boarding from £40/night and day care from £30 in Congleton, Cheshire. Licensed (CE/HB232), fully insured and DBS checked.",
 };
 
 export default function Services() {
@@ -19,7 +19,7 @@ export default function Services() {
           Our Services
         </h1>
         <p className="text-[#6B6560] text-lg max-w-xl mx-auto">
-          Tailored care for every dog, in a warm and loving home environment.
+          Tailored care for every dog, in a warm and loving home environment in Congleton, Cheshire
         </p>
       </div>
 

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "How to Book – Katie's K9s",
+  title: "How to Book Dog Boarding in Congleton | Katie's K9s",
   description:
-    "Find out how to book dog boarding or day care at Katie's K9s in Congleton, Cheshire.",
+    "Find out how to book home dog boarding or day care at Katie's K9s in Congleton, Cheshire. Simple 5-step process from enquiry to booking confirmation.",
 };
 
 const bookingSteps = [
@@ -43,46 +43,6 @@ const bookingSteps = [
     number: "05",
     title: "Booking Confirmation",
     body: "Once the trial has gone well and everyone is happy, we can confirm your booking by taking a small non-refundable deposit to reserve your dog's stay with us. Then there's nothing left to do except pack their bags, bring their favourite toy, and get ready for their little holiday in their home-from-home.",
-  },
-];
-
-const stayInfo = [
-  {
-    title: "Drop Off & Collections",
-    body: "Drop-off and collection times will be agreed with you in advance and we kindly ask that these times are strictly adhered to.\n\nTo make these times as calm and stress-free for all dogs, we prepare the environment by ensuring the other dogs are settled and secure. This allows us to welcome your dog properly and introduce them calmly into the group.\n\nWe also carefully schedule our day, including dog care, personal appointments and childcare, around these times so that we can give every dog the attention they deserve.",
-  },
-  {
-    title: "What to Bring",
-    intro: "To help your dog feel as settled and comfortable as possible, we ask owners to provide a few familiar items from home:",
-    items: [
-      "Your dog's usual food for the duration of their stay, ensuring it is sealed or stored in an airtight container",
-      "Their bed or blanket that smells like home",
-      "Any favourite toys or comfort items",
-      "A lead, harness and collar",
-    ],
-  },
-  {
-    title: "Settling In",
-    body: "Once your dog arrives, they will have time to settle into the home and get comfortable. For new dogs especially, we take things at their pace and allow them to explore the environment and relax.\n\nGentle supervision and gradual interaction with the other dogs helps everyone feel comfortable and confident.",
-  },
-  {
-    title: "A Typical Day",
-    intro: "Although every dog's routine is slightly different, their days with us usually include:",
-    items: [
-      "Walks and outdoor adventures",
-      "Playtime with suitable furry friends",
-      "Mental enrichment such as toys, games and scent activities",
-      "Relaxation time in a calm environment with unlimited love and cuddles",
-    ],
-    closing: "Our aim is to provide a well balanced day where dogs can enjoy plenty of exercise and social interaction, alongside dedicated time to relax, unwind, and feel truly at home. Each household is given their own comfortable room downstairs, offering a calm and familiar space for a peaceful night's sleep.",
-  },
-  {
-    title: "Communication & Updates",
-    body: "We know how important it is to feel reassured while your dog is away from home. That's why we send daily updates via WhatsApp, including photos and videos so you can see your pup enjoying their time with us and having the best time.\n\nMany owners say this becomes the highlight of their day while they're away!",
-  },
-  {
-    title: "Heading Home",
-    body: "When you collect your dog, we'll let you know how they've been during their stay and share any little highlights from their time with us.\n\nThey will often leave happy, relaxed and pleasantly tired after all the fun, walks and companionship they've enjoyed during their stay.\n\nWe love getting to know every dog who stays with us and watching their confidence grow as they become familiar with our home, our routine and their doggy friends. Many of our guests return regularly and quickly settle back in as if they're coming back to visit family.",
   },
 ];
 

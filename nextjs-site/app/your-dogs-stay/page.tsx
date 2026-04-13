@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Your Dog's Stay – Katie's K9s",
+  title: "Your Dog's Stay – Dog Boarding Congleton | Katie's K9s",
   description:
-    "Find out what to expect during your dog's stay at Katie's K9s in Congleton, Cheshire.",
+    "Find out what to expect during your dog's home boarding or day care stay at Katie's K9s in Congleton, Cheshire.",
 };
 
 const stayInfo = [
