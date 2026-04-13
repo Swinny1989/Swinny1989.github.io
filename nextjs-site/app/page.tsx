@@ -43,11 +43,6 @@ const jsonLd = {
     addressRegion: "Cheshire",
     addressCountry: "GB",
   },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 53.1628,
-    longitude: -2.2168,
-  },
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
     dayOfWeek: [
