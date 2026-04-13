@@ -20,7 +20,7 @@ for (const file of files) {
   // Skip files already under 200KB
   if (size < 200 * 1024) continue;
 
-  const image = sharp(filePath);
+  const image = sharp(filePath).rotate(); // auto-rotate based on EXIF orientation
   const meta = await image.metadata();
 
   // Skip if already small enough
