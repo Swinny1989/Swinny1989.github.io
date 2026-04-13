@@ -137,7 +137,7 @@ export default function Home() {
         <h2 className="font-serif text-3xl sm:text-4xl text-[#3D5A3E] mb-6">
           Licensed Home Dog Boarding in Congleton, Cheshire
         </h2>
-        <h3 className="font-serif text-3xl sm:text-3xl text-[#3D5A3E] mb-8"> 
+        <h3 className="font-serif text-2xl sm:text-3xl text-[#3D5A3E] mb-8"> 
           Where your dog is truly part of the family
         </h3>
         <div className="space-y-4 text-[#6B6560] text-base sm:text-lg leading-relaxed text-left sm:text-center">
