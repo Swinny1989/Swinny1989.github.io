@@ -1,70 +1,176 @@
 {
   "images": [
-    { "src": "/images/gallery/new54.JPG", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new50.JPG", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new45.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new58.jpg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new55.jpg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new51.JPG", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new56.jpg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new52.JPG", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new59.jpg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new57.jpg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new53.JPG", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new4.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new8.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new12.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new16.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new20.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new1.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new5.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new9.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new13.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new2.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new6.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new10.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new3.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new7.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new11.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new17.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new21.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new25.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new29.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new18.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new22.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new26.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new30.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new19.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new23.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new27.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new31.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new28.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new32.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new36.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new40.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new33.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new34.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new38.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new42.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new35.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new39.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new43.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new44.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new48.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new41.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new46.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new49.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new47.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/new60.JPG", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/8.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/11.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/21.jpeg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/IMG_1.jpg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/IMG_2.jpg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/IMG_3.jpg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/IMG_7.jpg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/IMG_9.jpg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/IMG_10.jpg", "alt": "Dogs at Katie's K9s" },
-    { "src": "/images/gallery/IMG_11.jpg", "alt": "Dogs at Katie's K9s" }
+    {
+      "src": "/images/gallery/IMG_1633.jpg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/2F80F33E-9A9E-482F-AA2D-6DAA564BAE93_1_102_o.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/8F59E588-0C16-4EAC-8DE6-0B1460EAC029_1_102_o.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/6C68F38E-6658-4858-BD72-466A004C9D0A_1_102_a.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/C0CB8452-C749-4E23-8383-764D532E13BC.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/35A875A0-7CE6-4B59-8CFF-76F12AAE2BA8.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new56.jpg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/0FB22084-2A53-4A09-90C9-87A3F752260F_1_102_a.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/C644956F-DF20-4AF8-8B1E-47E692D8FAF3_1_102_o.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/4C52B449-691A-426C-9794-DE4DD980E811.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/27993A07-B5A2-4E72-A11F-23FE2F6CD254.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new54.JPG",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new50.JPG",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new45.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new55.jpg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new51.JPG",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new52.JPG",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new53.JPG",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new12.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new20.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new1.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new9.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new13.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new2.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new6.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new17.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new22.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new26.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new27.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new36.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new40.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new33.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new34.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new42.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new39.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new41.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new49.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/new60.JPG",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/8.jpeg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/IMG_2.jpg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/IMG_7.jpg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/IMG_10.jpg",
+      "alt": "Dogs at Katie's K9s"
+    },
+    {
+      "src": "/images/gallery/IMG_11.jpg",
+      "alt": "Dogs at Katie's K9s"
+    }
   ]
 }
