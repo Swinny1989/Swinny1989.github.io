@@ -213,7 +213,7 @@ export default function Home() {
       {/* CTA banner */}
       <section className="relative h-[28rem] sm:h-[36rem] overflow-hidden">
         <Image
-          src="/images/puppy-with-toy.png"
+          src="/images/puppy-with-toy.jpg"
           alt="Puppy playing with toy at Katie's K9s Congleton"
           fill
           className="object-cover object-center"
