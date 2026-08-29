@@ -6,16 +6,8 @@
       "title": "Home Dog Boarding",
       "description": "Our home boarding provides a calm home from home stay where your dog lives as part of the family, enjoying their usual routines, daily walks, enrichment and plenty of love and attention while you’re away",
       "pricing": [
-        { "label": "Per night (up to 24 hours)", "price": "£45" },
-        { "label": "Per night (stays of 7+ days)", "price": "£40" }
+        { "label": "Per night (up to 24 hours)", "price": "£45" }
       ],
-      "additionalPricing": {
-        "heading": "Additional dogs from the same household",
-        "items": [
-          { "label": "Per night (up to 24 hours)", "price": "£35" },
-          { "label": "Per night (stays of 7+ days)", "price": "£30" }
-        ]
-      },
       "note": "Additional charges apply for puppies under 12 months."
     },
     {
@@ -26,7 +18,6 @@
       "pricing": [
         { "label": "Up to 10 hours (8am – 6pm)", "price": "£30" }
       ],
-      "additionalPricing": null,
       "note": "Additional charges apply for puppies under 12 months."
     }
   ],

@@ -42,23 +42,6 @@ export default function Services() {
                 </div>
               ))}
             </div>
-
-            {s.additionalPricing && (
-              <div className="mt-2">
-                <p className="text-sm font-semibold text-[#8B7355] mb-1 underline">
-                  {s.additionalPricing.heading}
-                </p>
-                <div className="space-y-1">
-                  {s.additionalPricing.items.map((p) => (
-                    <div key={p.label} className="flex justify-between items-center py-2 border-b border-stone-100">
-                      <span className="text-[#6B6560] text-sm">{p.label}</span>
-                      <span className="text-[#3D5A3E] font-bold text-lg">{p.price}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {s.note && (
               <p className="text-xs text-[#8B7355] italic mt-auto">{s.note}</p>
             )}
