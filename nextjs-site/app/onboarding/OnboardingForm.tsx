@@ -246,33 +246,34 @@ export default function OnboardingForm() {
     setSubmitError(null);
 
     const flat = flattenForSubmit(formData);
+    const dogName = formData.dog.name || "dog";
+    const ownerName = `${formData.owner1.firstName} ${formData.owner1.surname}`.trim();
+    const fileName = `KatiesK9s_Registration_${ownerName.replace(/\s+/g, "_")}_${dogName}.pdf`;
 
     try {
-      // Generate PDF client-side
+      // Generate PDF
       const pdfBlob = await generateRegistrationPdf(formData);
-      const dogName = formData.dog.name || "dog";
-      const ownerName = `${formData.owner1.firstName} ${formData.owner1.surname}`.trim();
-      const fileName = `KatiesK9s_Registration_${ownerName.replace(/\s+/g, "_")}_${dogName}.pdf`;
+      // Explicitly type as PDF so FormSubmit recognises it as an attachment
+      const pdfFile = new File([pdfBlob], fileName, { type: "application/pdf" });
 
-      // Build multipart form (supports file attachment)
+      // Build multipart/form-data body — same as a browser file input would produce
       const body = new FormData();
       body.append("_subject", `New Registration: ${dogName} — ${ownerName}`);
       body.append("_captcha", "false");
       body.append("_template", "table");
-
-      // Attach PDF
-      body.append("attachment", pdfBlob, fileName);
-
-      // Append all flat fields
+      body.append("attachment", pdfFile);
       Object.entries(flat).forEach(([k, v]) => body.append(k, v ?? ""));
 
-      const res = await fetch("https://formsubmit.co/katies-k9s@hotmail.com", {
+      // Use the standard (non-AJAX) endpoint with fetch — DO NOT set Content-Type,
+      // the browser must set the multipart boundary automatically
+      const res = await fetch("https://formsubmit.co/tom@tom-swindell.co.uk", {
         method: "POST",
         body,
       });
 
+      // FormSubmit redirects to its thank-you page on success (res.redirected = true)
+      // It may also return 200 depending on the request origin
       if (res.ok || res.redirected) {
-        // Clear saved state
         try {
           localStorage.removeItem(STORAGE_KEY);
           localStorage.removeItem(STEP_KEY);
