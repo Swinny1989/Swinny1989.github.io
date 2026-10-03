@@ -266,7 +266,7 @@ export default function OnboardingForm() {
 
       // Use the standard (non-AJAX) endpoint with fetch — DO NOT set Content-Type,
       // the browser must set the multipart boundary automatically
-      const res = await fetch("https://formsubmit.co/tom@tom-swindell.co.uk", {
+      const res = await fetch("https://formsubmit.co/katies-k9s@hotmail.com", {
         method: "POST",
         body,
       });
