@@ -15,10 +15,6 @@ export default function OnboardingPage() {
         <h1 className="font-serif text-4xl sm:text-5xl text-[#3D5A3E] mb-4">
           Registration Form
         </h1>
-        <p className="text-[#6B6560] text-lg max-w-xl mx-auto">
-          Welcome to Katie&apos;s K9s. Please complete all sections — your progress
-          is automatically saved so you can pick up where you left off.
-        </p>
       </div>
 
       <OnboardingForm />

@@ -4,7 +4,6 @@ import { FormData, ConsentsDetails } from "./types";
 import {
   SectionHeading,
   ConsentRow,
-  InfoBanner,
   StepNav,
 } from "./FormComponents";
 
@@ -23,19 +22,18 @@ export default function Step7Consents({
   const update = (field: keyof ConsentsDetails, value: boolean) =>
     onUpdate({ consents: { ...c, [field]: value } });
 
-  const isMultipleDogs = false; // single dog per form
+  const canContinue = c.consentVetCare && c.consentMixWithDogs;
 
   return (
     <div className="flex flex-col gap-4">
       <SectionHeading>Consents</SectionHeading>
       <p className="text-sm text-[#6B6560]">
-        Please read each consent carefully and tick those you agree to.{" "}
-        <strong>Veterinary care consent is required.</strong>
+        Please read each consent carefully and tick those you agree to.
       </p>
 
       <div className="flex flex-col gap-4">
-        {/* Vet care — mandatory */}
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+        {/* Vet care — mandatory, no special box */}
+        <div className="bg-white rounded-xl border border-stone-100 p-4 flex flex-col gap-4">
           <ConsentRow
             checked={c.consentVetCare}
             onChange={(v) => update("consentVetCare", v)}
@@ -51,18 +49,21 @@ export default function Step7Consents({
               contacts to discuss an appropriate course of action.
             </span>
           </ConsentRow>
-        </div>
 
-        <div className="bg-white rounded-xl border border-stone-100 p-4 flex flex-col gap-4">
           <ConsentRow
             checked={c.consentMixWithDogs}
             onChange={(v) => update("consentMixWithDogs", v)}
           >
-            I consent to my dog mixing with dogs from other households whilst
-            under the care of Katie&apos;s K9s, in and outside of the home,
-            including the garden.
+            <span>
+              <strong>Mixing with other dogs (required)</strong> — I consent to
+              my dog mixing with dogs from other households whilst under the
+              care of Katie&apos;s K9s, in and outside of the home, including the
+              garden.
+            </span>
           </ConsentRow>
+        </div>
 
+        <div className="bg-white rounded-xl border border-stone-100 p-4 flex flex-col gap-4">
           <ConsentRow
             checked={c.consentTreats}
             onChange={(v) => update("consentTreats", v)}
@@ -148,7 +149,7 @@ export default function Step7Consents({
             onChange={(v) => update("consentEnvironmentalEnrichment", v)}
           >
             <strong>Environmental enrichment</strong> — safe exploration of
-            new areas, enrichment setups within the home or garden.
+            new areas, enrichment setups within the home or garden environment.
           </ConsentRow>
         </div>
 
@@ -166,25 +167,27 @@ export default function Step7Consents({
             checked={c.consentPhotosVideos}
             onChange={(v) => update("consentPhotosVideos", v)}
           >
-            I consent for photographs and videos of my dog to be used for
+            I consent for photographs and videos of my dog/s to be used for
             social media and marketing purposes for Katie&apos;s K9s.
           </ConsentRow>
 
-          {!isMultipleDogs && null}
+          <ConsentRow
+            checked={c.consentKeptTogetherOvernight}
+            onChange={(v) => update("consentKeptTogetherOvernight", v)}
+          >
+            I consent for my dogs to be kept together overnight in their
+            designated room. (Applicable when boarding more than one dog
+            overnight from the same household.)
+          </ConsentRow>
         </div>
       </div>
-
-      <InfoBanner>
-        You must tick veterinary care consent to proceed. All other consents are
-        optional.
-      </InfoBanner>
 
       <StepNav
         onBack={onBack}
         onNext={onNext}
         isFirst={false}
         isLast={false}
-        disabled={!c.consentVetCare}
+        disabled={!canContinue}
       />
     </div>
   );

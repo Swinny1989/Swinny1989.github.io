@@ -44,15 +44,14 @@ export default function Step3HealthVets({
     h.lastWormingDate.trim() !== "" &&
     v.vetName.trim() !== "" &&
     v.vetAddressLine1.trim() !== "" &&
-    v.vetPhone.trim() !== "";
+    v.vetTown.trim() !== "" &&
+    v.vetPostcode.trim() !== "" &&
+    v.vetPhone.trim() !== "" &&
+    v.vetOutOfHoursPhone.trim() !== "";
 
   return (
     <div className="flex flex-col gap-4">
       <SectionHeading>Vaccinations</SectionHeading>
-      <InfoBanner>
-        A current vaccination certificate must be presented before your booking
-        is accepted.
-      </InfoBanner>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="Date of last vaccinations" required>
@@ -201,6 +200,8 @@ export default function Step3HealthVets({
             updateVet(("vet" + field.charAt(0).toUpperCase() + field.slice(1)) as keyof VetDetails, value)
           }
           autoCompletePrefix="section-vet "
+          townRequired
+          postcodeRequired
         />
       </Field>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -214,12 +215,13 @@ export default function Step3HealthVets({
             required
           />
         </Field>
-        <Field label="Out of hours phone">
+        <Field label="Out of hours phone" required>
           <Input
             value={v.vetOutOfHoursPhone}
             onChange={(val) => updateVet("vetOutOfHoursPhone", val)}
             type="tel"
             inputMode="tel"
+            required
           />
         </Field>
       </div>

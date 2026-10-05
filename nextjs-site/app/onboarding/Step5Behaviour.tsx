@@ -69,6 +69,26 @@ export default function Step5Behaviour({
   const update = (field: keyof BehaviourDetails, value: string) =>
     onUpdate({ behaviour: { ...b, [field]: value } });
 
+  const allAnswered =
+    b.boardedBefore !== "" &&
+    b.likesCuddles !== "" &&
+    b.stealsFood !== "" &&
+    b.possessiveFood !== "" &&
+    b.possessiveToys !== "" &&
+    b.jumpsUp !== "" &&
+    b.toiletsIndoors !== "" &&
+    b.happyAlone !== "" &&
+    b.barksAtOthers !== "" &&
+    b.recallOffLead !== "" &&
+    b.happyInCar !== "" &&
+    b.happyNearWater !== "" &&
+    b.nervousAnxious !== "" &&
+    b.loudNoises !== "" &&
+    b.destructive !== "" &&
+    b.escapist !== "" &&
+    b.aggressiveOtherDogs !== "" &&
+    b.aggressivePeople !== "";
+
   return (
     <div className="flex flex-col gap-4">
       <SectionHeading>Personality & Routine</SectionHeading>
@@ -228,7 +248,7 @@ export default function Step5Behaviour({
           onDetailsChange={(v) => update("escapistDetails", v)}
         />
         <BehaviourRow
-          label="Are they aggressive with other dogs?"
+          label="Have they ever shown aggression towards other dogs?"
           value={b.aggressiveOtherDogs}
           hasDetails
           detailsValue={b.aggressiveOtherDogsDetails}
@@ -238,7 +258,7 @@ export default function Step5Behaviour({
           onDetailsChange={(v) => update("aggressiveOtherDogsDetails", v)}
         />
         <BehaviourRow
-          label="Are they aggressive with people (including children)?"
+          label="Have they ever shown aggression towards people, including children?"
           value={b.aggressivePeople}
           hasDetails
           detailsValue={b.aggressivePeopleDetails}
@@ -262,6 +282,7 @@ export default function Step5Behaviour({
         onNext={onNext}
         isFirst={false}
         isLast={false}
+        disabled={!allAnswered}
       />
     </div>
   );

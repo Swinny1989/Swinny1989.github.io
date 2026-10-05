@@ -8,7 +8,6 @@ import {
   STEP_KEY,
   TOTAL_STEPS,
 } from "./types";
-import { generateRegistrationPdf } from "./generatePdf";
 import { ProgressBar } from "./FormComponents";
 import Step1OwnerDetails from "./Step1OwnerDetails";
 import Step2DogDetails from "./Step2DogDetails";
@@ -167,24 +166,21 @@ function flattenForSubmit(data: RegistrationData): Record<string, string> {
     "Consent - Environmental Enrichment": yn(d.consents.consentEnvironmentalEnrichment),
     "Consent - Secure Field Off Lead": yn(d.consents.consentSecureFieldOffLead),
     "Consent - Photos/Videos": yn(d.consents.consentPhotosVideos),
+    "Consent - Kept Together Overnight": yn(d.consents.consentKeptTogetherOvernight),
 
     // T&Cs
     "Terms Agreed": yn(d.tcAgreed),
 
     // Signatures
-    "Owner 1 Printed Name": d.signature.owner1PrintedName,
     "Owner 1 Signed Name": d.signature.owner1SignedName,
     "Owner 1 Signature Date": today,
-    ...(d.hasOwner2 ? {
-      "Owner 2 Printed Name": d.signature.owner2PrintedName,
+    ...(d.owner2.firstName.trim() || d.owner2.surname.trim() ? {
       "Owner 2 Signed Name": d.signature.owner2SignedName,
       "Owner 2 Signature Date": today,
     } : {}),
-    "Vet Auth Owner 1 Printed Name": d.signature.vetAuthOwner1PrintedName,
     "Vet Auth Owner 1 Signed Name": d.signature.vetAuthOwner1SignedName,
     "Vet Auth Owner 1 Date": today,
-    ...(d.hasOwner2 ? {
-      "Vet Auth Owner 2 Printed Name": d.signature.vetAuthOwner2PrintedName,
+    ...(d.owner2.firstName.trim() || d.owner2.surname.trim() ? {
       "Vet Auth Owner 2 Signed Name": d.signature.vetAuthOwner2SignedName,
       "Vet Auth Owner 2 Date": today,
     } : {}),
@@ -248,32 +244,22 @@ export default function OnboardingForm() {
     const flat = flattenForSubmit(formData);
     const dogName = formData.dog.name || "dog";
     const ownerName = `${formData.owner1.firstName} ${formData.owner1.surname}`.trim();
-    const fileName = `KatiesK9s_Registration_${ownerName.replace(/\s+/g, "_")}_${dogName}.pdf`;
+
+    const payload: Record<string, string> = {
+      _subject: `New Registration: ${dogName} — ${ownerName}`,
+      _captcha: "false",
+      _template: "table",
+      ...flat,
+    };
 
     try {
-      // Generate PDF
-      const pdfBlob = await generateRegistrationPdf(formData);
-      // Explicitly type as PDF so FormSubmit recognises it as an attachment
-      const pdfFile = new File([pdfBlob], fileName, { type: "application/pdf" });
-
-      // Build multipart/form-data body — same as a browser file input would produce
-      const body = new FormData();
-      body.append("_subject", `New Registration: ${dogName} — ${ownerName}`);
-      body.append("_captcha", "false");
-      body.append("_template", "table");
-      body.append("attachment", pdfFile);
-      Object.entries(flat).forEach(([k, v]) => body.append(k, v ?? ""));
-
-      // Use the standard (non-AJAX) endpoint with fetch — DO NOT set Content-Type,
-      // the browser must set the multipart boundary automatically
-      const res = await fetch("https://formsubmit.co/katies-k9s@hotmail.com", {
+      const res = await fetch("https://formsubmit.co/ajax/tom@tom-swindell.co.uk", {
         method: "POST",
-        body,
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
       });
 
-      // FormSubmit redirects to its thank-you page on success (res.redirected = true)
-      // It may also return 200 depending on the request origin
-      if (res.ok || res.redirected) {
+      if (res.ok) {
         try {
           localStorage.removeItem(STORAGE_KEY);
           localStorage.removeItem(STEP_KEY);
@@ -304,13 +290,18 @@ export default function OnboardingForm() {
   if (submitted) {
     return (
       <div className="text-center py-12">
-        <div className="text-5xl mb-6">🐾</div>
+        <div className="flex justify-center mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#3D5A3E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-16 h-16">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
         <h2 className="font-serif text-3xl text-[#3D5A3E] mb-4">
-          Registration Submitted!
+          Registration Submitted
         </h2>
         <p className="text-[#6B6560] text-lg max-w-md mx-auto">
-          Thank you for registering with Katie&apos;s K9s. We&apos;ll be in touch soon to
-          discuss your dog&apos;s stay.
+          Thank you for registering with Katie&apos;s K9s, we&apos;re delighted to welcome
+          you and your dog to the Katie&apos;s K9s family.
         </p>
       </div>
     );

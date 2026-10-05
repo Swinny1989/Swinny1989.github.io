@@ -5,6 +5,7 @@ import {
   Field,
   Input,
   SectionHeading,
+  InfoBanner,
   StepNav,
   AddressBlock,
 } from "./FormComponents";
@@ -14,34 +15,36 @@ function OwnerBlock({
   data,
   onChange,
   autoPrefix,
+  required,
 }: {
   title: string;
   data: OwnerDetails;
   onChange: (field: keyof OwnerDetails, value: string) => void;
   autoPrefix: string;
+  required?: boolean;
 }) {
   return (
     <div className="flex flex-col gap-4">
       <SectionHeading>{title}</SectionHeading>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Field label="First name" required>
+        <Field label="First name" required={required}>
           <Input
             value={data.firstName}
             onChange={(v) => onChange("firstName", v)}
             autoComplete={`${autoPrefix}given-name`}
-            required
+            required={required}
           />
         </Field>
-        <Field label="Surname" required>
+        <Field label="Surname" required={required}>
           <Input
             value={data.surname}
             onChange={(v) => onChange("surname", v)}
             autoComplete={`${autoPrefix}family-name`}
-            required
+            required={required}
           />
         </Field>
       </div>
-      <Field label="Address" required>
+      <Field label="Address" required={required}>
         <AddressBlock
           addressLine1={data.addressLine1}
           addressLine2={data.addressLine2}
@@ -51,17 +54,19 @@ function OwnerBlock({
             onChange(field as keyof OwnerDetails, value)
           }
           autoCompletePrefix={autoPrefix}
+          townRequired={required}
+          postcodeRequired={required}
         />
       </Field>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Field label="Mobile" required>
+        <Field label="Mobile" required={required}>
           <Input
             value={data.mobile}
             onChange={(v) => onChange("mobile", v)}
             type="tel"
             autoComplete={`${autoPrefix}tel`}
             inputMode="tel"
-            required
+            required={required}
           />
         </Field>
         <Field label="Home phone">
@@ -74,13 +79,13 @@ function OwnerBlock({
           />
         </Field>
       </div>
-      <Field label="Email" required>
+      <Field label="Email" required={required}>
         <Input
           value={data.email}
           onChange={(v) => onChange("email", v)}
           type="email"
           autoComplete={`${autoPrefix}email`}
-          required
+          required={required}
         />
       </Field>
     </div>
@@ -111,6 +116,7 @@ export default function Step1OwnerDetails({
     data.owner1.firstName.trim() !== "" &&
     data.owner1.surname.trim() !== "" &&
     data.owner1.addressLine1.trim() !== "" &&
+    data.owner1.town.trim() !== "" &&
     data.owner1.postcode.trim() !== "" &&
     data.owner1.mobile.trim() !== "" &&
     data.owner1.email.trim() !== "" &&
@@ -120,58 +126,40 @@ export default function Step1OwnerDetails({
 
   return (
     <div className="flex flex-col gap-2">
+      {/* Intro blurb — page 1 only */}
+      <InfoBanner>
+        We kindly ask you to complete all information on the below form to allow
+        us to make your dog/s as comfortable as possible during their time with
+        Katie&apos;s K9s. Some information is mandatory to comply with our boarding
+        licence; dogs are not legally able to stay unless this information is
+        obtained.
+      </InfoBanner>
+
       <OwnerBlock
         title="Your Details"
         data={data.owner1}
         onChange={updateOwner1}
         autoPrefix=""
+        required
       />
 
-      {/* Owner 2 toggle */}
-      <div className="mt-6">
-        <button
-          type="button"
-          onClick={() => onUpdate({ hasOwner2: !data.hasOwner2 })}
-          className={`flex items-center gap-3 w-full rounded-xl border p-4 transition-colors text-left ${
-            data.hasOwner2
-              ? "border-[#3D5A3E] bg-[#3D5A3E]/5"
-              : "border-stone-200 bg-white hover:border-[#3D5A3E]"
-          }`}
-        >
-          <div
-            className={`w-10 h-6 rounded-full transition-colors relative flex-shrink-0 ${
-              data.hasOwner2 ? "bg-[#3D5A3E]" : "bg-stone-200"
-            }`}
-          >
-            <div
-              className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${
-                data.hasOwner2 ? "translate-x-5" : "translate-x-1"
-              }`}
-            />
-          </div>
-          <span className="font-medium text-[#3D5A3E]">
-            Add a second owner
-          </span>
-        </button>
-      </div>
-
-      {data.hasOwner2 && (
-        <div className="mt-2">
-          <OwnerBlock
-            title="Owner 2 Details"
-            data={data.owner2}
-            onChange={updateOwner2}
-            autoPrefix="section-owner2 "
-          />
-        </div>
-      )}
+      {/* Owner 2 — always shown, not mandatory */}
+      <OwnerBlock
+        title="Owner 2 Details (if applicable)"
+        data={data.owner2}
+        onChange={updateOwner2}
+        autoPrefix="section-owner2 "
+        required={false}
+      />
 
       {/* Emergency contact */}
       <div className="flex flex-col gap-4 mt-4">
         <SectionHeading>Emergency Contact</SectionHeading>
         <p className="text-sm text-[#6B6560] -mt-2">
-          Must be someone willing and able to collect your dog in an emergency,
-          and not someone you are travelling with.
+          This must be someone who is willing and able to collect your dog in
+          the event of an emergency, and not someone you are travelling with.
+          Please note that your emergency contact will only be contacted as a
+          last resort.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="First name" required>

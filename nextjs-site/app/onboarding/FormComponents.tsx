@@ -254,6 +254,8 @@ export function AddressBlock({
   postcode,
   onChange,
   autoCompletePrefix,
+  townRequired,
+  postcodeRequired,
 }: {
   addressLine1: string;
   addressLine2: string;
@@ -261,6 +263,8 @@ export function AddressBlock({
   postcode: string;
   onChange: (field: string, value: string) => void;
   autoCompletePrefix?: string;
+  townRequired?: boolean;
+  postcodeRequired?: boolean;
 }) {
   const pfx = autoCompletePrefix ?? "";
   return (
@@ -279,18 +283,30 @@ export function AddressBlock({
         autoComplete={`${pfx}address-line2`}
       />
       <div className="grid grid-cols-2 gap-3">
-        <Input
-          value={town}
-          onChange={(v) => onChange("town", v)}
-          placeholder="Town / City"
-          autoComplete={`${pfx}address-level2`}
-        />
-        <Input
-          value={postcode}
-          onChange={(v) => onChange("postcode", v)}
-          placeholder="Postcode"
-          autoComplete={`${pfx}postal-code`}
-        />
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-medium text-[#3D5A3E]">
+            Town / City{townRequired && <span className="text-red-500 ml-1">*</span>}
+          </label>
+          <Input
+            value={town}
+            onChange={(v) => onChange("town", v)}
+            placeholder="Town / City"
+            autoComplete={`${pfx}address-level2`}
+            required={townRequired}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-medium text-[#3D5A3E]">
+            Postcode{postcodeRequired && <span className="text-red-500 ml-1">*</span>}
+          </label>
+          <Input
+            value={postcode}
+            onChange={(v) => onChange("postcode", v)}
+            placeholder="Postcode"
+            autoComplete={`${pfx}postal-code`}
+            required={postcodeRequired}
+          />
+        </div>
       </div>
     </div>
   );

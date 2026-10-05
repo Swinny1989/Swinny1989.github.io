@@ -110,9 +110,10 @@ export default function Step2DogDetails({
       </Field>
 
       <InfoBanner>
-        All dogs must be fully vaccinated and treated for fleas and worms. New
-        treatments or vaccination courses must be administered at least{" "}
-        <strong>14 days prior</strong> to your dog&apos;s stay.
+        All dogs must be fully vaccinated and treated for fleas and worms. A
+        current vaccination certificate must be presented before your booking is
+        accepted. New treatments or vaccination courses must be administered at
+        least <strong>14 days prior to</strong> your dog&apos;s stay.
       </InfoBanner>
 
       <StepNav

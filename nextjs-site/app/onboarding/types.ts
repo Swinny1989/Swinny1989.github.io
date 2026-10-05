@@ -136,18 +136,14 @@ export interface ConsentsDetails {
 }
 
 export interface SignatureDetails {
-  owner1PrintedName: string;
   owner1SignedName: string;
-  owner1SignedDate: string; // auto-set
-  owner2PrintedName: string;
+  owner1SignedDate: string;
   owner2SignedName: string;
-  owner2SignedDate: string; // auto-set
-  vetAuthOwner1PrintedName: string;
+  owner2SignedDate: string;
   vetAuthOwner1SignedName: string;
-  vetAuthOwner1Date: string; // auto-set
-  vetAuthOwner2PrintedName: string;
+  vetAuthOwner1Date: string;
   vetAuthOwner2SignedName: string;
-  vetAuthOwner2Date: string; // auto-set
+  vetAuthOwner2Date: string;
   tcAgreed: boolean;
 }
 
@@ -300,16 +296,12 @@ export const INITIAL_FORM_DATA: FormData = {
   },
   tcAgreed: false,
   signature: {
-    owner1PrintedName: "",
     owner1SignedName: "",
     owner1SignedDate: "",
-    owner2PrintedName: "",
     owner2SignedName: "",
     owner2SignedDate: "",
-    vetAuthOwner1PrintedName: "",
     vetAuthOwner1SignedName: "",
     vetAuthOwner1Date: "",
-    vetAuthOwner2PrintedName: "",
     vetAuthOwner2SignedName: "",
     vetAuthOwner2Date: "",
     tcAgreed: false,

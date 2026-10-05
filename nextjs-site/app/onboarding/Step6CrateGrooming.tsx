@@ -25,15 +25,18 @@ export default function Step6CrateGrooming({
   const update = (field: keyof CrateGroomingDetails, value: string) =>
     onUpdate({ crateGrooming: { ...c, [field]: value } });
 
+  const canContinue = c.usesCrateAtHome !== "";
+
   return (
     <div className="flex flex-col gap-4">
       <SectionHeading>Crate</SectionHeading>
       <InfoBanner>
-        Katie&apos;s K9s will <strong>never</strong> crate a dog that has not been
-        crate trained. Crate consent is entirely optional.
+        Katie&apos;s K9s will never crate a dog who has not been crate trained.
+        Crate use is entirely optional; however, consent must be provided for
+        dogs who are comfortable and accustomed to using a crate.
       </InfoBanner>
 
-      <Field label="Does your dog use a crate at home?">
+      <Field label="Does your dog use a crate at home?" required>
         <ToggleGroup
           options={["Yes", "No"] as const}
           value={c.usesCrateAtHome}
@@ -91,6 +94,7 @@ export default function Step6CrateGrooming({
         onNext={onNext}
         isFirst={false}
         isLast={false}
+        disabled={!canContinue}
       />
     </div>
   );

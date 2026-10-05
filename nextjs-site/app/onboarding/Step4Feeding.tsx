@@ -33,7 +33,10 @@ export default function Step4Feeding({
     f.foodBrand.trim() !== "" &&
     f.quantityGrams.trim() !== "" &&
     f.mealsPerDay.trim() !== "" &&
-    f.treatsAllowed !== "";
+    f.mealTimes.trim() !== "" &&
+    f.treatsAllowed !== "" &&
+    f.eatingStyle.trim() !== "" &&
+    f.foodOriented.trim() !== "";
 
   return (
     <div className="flex flex-col gap-4">
@@ -59,10 +62,11 @@ export default function Step4Feeding({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="Quantity per meal (grams)" required>
+          {/* type="text" with inputMode="numeric" avoids the spinner arrows */}
           <Input
             value={f.quantityGrams}
             onChange={(v) => update("quantityGrams", v)}
-            type="number"
+            type="text"
             inputMode="numeric"
             placeholder="e.g. 250"
             required
@@ -72,7 +76,7 @@ export default function Step4Feeding({
           <Input
             value={f.mealsPerDay}
             onChange={(v) => update("mealsPerDay", v)}
-            type="number"
+            type="text"
             inputMode="numeric"
             placeholder="e.g. 2"
             required
@@ -80,28 +84,26 @@ export default function Step4Feeding({
         </Field>
       </div>
 
-      <Field label="Meal times">
+      <Field label="Meal times" required>
         <Input
           value={f.mealTimes}
           onChange={(v) => update("mealTimes", v)}
           placeholder="e.g. 7:30am and 5:30pm"
           autoComplete="off"
+          required
         />
       </Field>
 
-      <Field
-        label="Preparation details"
-        hint="e.g. kibble soaked in warm water, mixed with wet food"
-      >
+      <Field label="Preparation details">
         <Textarea
           value={f.preparationDetails}
           onChange={(v) => update("preparationDetails", v)}
-          placeholder="Any special preparation needed"
+          placeholder="e.g. kibble soaked in warm water, mixed with wet food"
           rows={2}
         />
       </Field>
 
-      <Field label="Katie's K9s treats allowed?" required>
+      <Field label="Are you happy for Katie&apos;s K9s to give your dog treats during their stay?" required>
         <ToggleGroup
           options={["Yes", "No"] as const}
           value={f.treatsAllowed}
@@ -109,7 +111,7 @@ export default function Step4Feeding({
         />
       </Field>
 
-      <Field label="Eating style">
+      <Field label="Eating style" required>
         <ToggleGroup
           options={["Eats immediately", "Grazes throughout day"] as const}
           value={
@@ -119,7 +121,7 @@ export default function Step4Feeding({
         />
       </Field>
 
-      <Field label="Are they food orientated / respond to food rewards?">
+      <Field label="Are they food orientated / do they respond to food rewards?" required>
         <Textarea
           value={f.foodOriented}
           onChange={(v) => update("foodOriented", v)}

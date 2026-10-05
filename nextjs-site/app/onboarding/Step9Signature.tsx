@@ -5,16 +5,12 @@ import { Field, Input, SectionHeading, InfoBanner } from "./FormComponents";
 
 function SignatureBlock({
   title,
-  printedName,
   signedName,
-  onPrintedNameChange,
   onSignedNameChange,
   required,
 }: {
   title: string;
-  printedName: string;
   signedName: string;
-  onPrintedNameChange: (v: string) => void;
   onSignedNameChange: (v: string) => void;
   required?: boolean;
 }) {
@@ -27,16 +23,8 @@ function SignatureBlock({
   return (
     <div className="bg-white rounded-xl border border-stone-100 p-4 flex flex-col gap-4">
       <h3 className="font-medium text-[#3D5A3E]">{title}</h3>
-      <Field label="Full name (printed)" required={required}>
-        <Input
-          value={printedName}
-          onChange={onPrintedNameChange}
-          autoComplete="name"
-          required={required}
-        />
-      </Field>
       <Field
-        label="Signature (type your full name)"
+        label="Full name"
         hint="By typing your name you confirm your agreement and intent to sign"
         required={required}
       >
@@ -69,44 +57,39 @@ export default function Step9Signature({
   isSubmitting: boolean;
 }) {
   const sig = data.signature;
-  const update = (field: keyof SignatureDetails, value: string | boolean) =>
+  const update = (field: keyof SignatureDetails, value: string) =>
     onUpdate({ signature: { ...sig, [field]: value } });
 
+  const hasOwner2Filled =
+    data.owner2.firstName.trim() !== "" || data.owner2.surname.trim() !== "";
+
   const canSubmit =
-    sig.owner1PrintedName.trim() !== "" &&
     sig.owner1SignedName.trim() !== "" &&
-    sig.vetAuthOwner1PrintedName.trim() !== "" &&
     sig.vetAuthOwner1SignedName.trim() !== "" &&
-    (!data.hasOwner2 ||
-      (sig.owner2PrintedName.trim() !== "" &&
-        sig.owner2SignedName.trim() !== "" &&
-        sig.vetAuthOwner2PrintedName.trim() !== "" &&
+    (!hasOwner2Filled ||
+      (sig.owner2SignedName.trim() !== "" &&
         sig.vetAuthOwner2SignedName.trim() !== ""));
 
   return (
     <div className="flex flex-col gap-4">
       <SectionHeading>Declaration &amp; Signature</SectionHeading>
       <InfoBanner>
-        By signing below you confirm that all information provided is factual
-        and up to date, and you agree to all terms and conditions stated within
-        this contract. Your statutory rights are not affected.
+        By submitting this form, you confirm that all information provided is
+        accurate and up to date. You also confirm that you have read and agree
+        to the Terms &amp; Conditions.
       </InfoBanner>
 
       <SignatureBlock
         title="Owner 1"
-        printedName={sig.owner1PrintedName}
         signedName={sig.owner1SignedName}
-        onPrintedNameChange={(v) => update("owner1PrintedName", v)}
         onSignedNameChange={(v) => update("owner1SignedName", v)}
         required
       />
 
-      {data.hasOwner2 && (
+      {hasOwner2Filled && (
         <SignatureBlock
           title="Owner 2"
-          printedName={sig.owner2PrintedName}
           signedName={sig.owner2SignedName}
-          onPrintedNameChange={(v) => update("owner2PrintedName", v)}
           onSignedNameChange={(v) => update("owner2SignedName", v)}
           required
         />
@@ -114,47 +97,50 @@ export default function Step9Signature({
 
       <SectionHeading>Veterinary Authorisation</SectionHeading>
       <div className="bg-white rounded-xl border border-stone-100 p-4 text-sm text-[#6B6560] leading-relaxed">
-        <p>
-          In the event that veterinary care is required during your dog&apos;s stay,
-          every effort will be made to contact and use your designated
-          veterinary practice. However, if the situation is deemed urgent and,
-          in our judgment, it is in the best interest of the dog to seek
-          immediate care, we reserve the right to use our chosen veterinary
-          practice.
-        </p>
-        <p className="mt-3 font-medium text-[#3D5A3E]">
+        <p className="font-medium text-[#3D5A3E] mb-2">
           Katie&apos;s K9s&apos; registered veterinary practice:
         </p>
-        <address className="not-italic mt-1">
+        <address className="not-italic mb-4">
           Millie&apos;s Vets, 6 John Bradshaw Close, Congleton CW12 1LB
         </address>
-        <p className="mt-3">
-          During my absence, Katie&apos;s K9s will be caring for my dog(s) and has
-          permission to transport them to the surgery for treatment. I authorise
-          the vet to treat my dog(s) and I, as the owner, will be responsible
-          for payment. I hereby give Katie&apos;s K9s permission to make any
-          decisions on treatments they feel need to be carried out and I
-          understand that Katie&apos;s K9s assumes no responsibility for the loss of
-          the dog(s) and is released from all liability related to
-          transportation, treatment and expense.
+        <p className="mb-2">
+          You agree that, during your absence, Katie&apos;s K9s may care for your
+          dog(s) and, if necessary, transport them to a veterinary surgery for
+          assessment or treatment.
+        </p>
+        <p className="mb-2">
+          You authorise the veterinary surgeon to examine and provide any
+          necessary treatment to your dog(s), and you agree to be responsible
+          for all veterinary fees and associated expenses incurred.
+        </p>
+        <p className="mb-2">
+          You agree that Katie&apos;s K9s may make decisions regarding veterinary
+          treatment where, in their reasonable judgement, immediate treatment is
+          necessary and you cannot be contacted in time. You understand that
+          Katie&apos;s K9s will always act in the best interests of your dog(s) and
+          will make reasonable efforts to contact you or your emergency contact
+          where possible.
+        </p>
+        <p>
+          You acknowledge and agree that Katie&apos;s K9s accepts no responsibility
+          for veterinary treatment, transportation or associated expenses, except
+          where liability cannot legally be excluded or limited. You agree to be
+          responsible for any costs incurred in connection with the
+          transportation, examination or treatment of your dog(s).
         </p>
       </div>
 
       <SignatureBlock
         title="Veterinary Authorisation — Owner 1"
-        printedName={sig.vetAuthOwner1PrintedName}
         signedName={sig.vetAuthOwner1SignedName}
-        onPrintedNameChange={(v) => update("vetAuthOwner1PrintedName", v)}
         onSignedNameChange={(v) => update("vetAuthOwner1SignedName", v)}
         required
       />
 
-      {data.hasOwner2 && (
+      {hasOwner2Filled && (
         <SignatureBlock
           title="Veterinary Authorisation — Owner 2"
-          printedName={sig.vetAuthOwner2PrintedName}
           signedName={sig.vetAuthOwner2SignedName}
-          onPrintedNameChange={(v) => update("vetAuthOwner2PrintedName", v)}
           onSignedNameChange={(v) => update("vetAuthOwner2SignedName", v)}
           required
         />
