@@ -145,7 +145,7 @@ export default function Step1OwnerDetails({
 
       {/* Owner 2 — always shown, not mandatory */}
       <OwnerBlock
-        title="Owner 2 Details (if applicable)"
+        title="Owner 2 Details"
         data={data.owner2}
         onChange={updateOwner2}
         autoPrefix="section-owner2 "
@@ -158,8 +158,6 @@ export default function Step1OwnerDetails({
         <p className="text-sm text-[#6B6560] -mt-2">
           This must be someone who is willing and able to collect your dog in
           the event of an emergency, and not someone you are travelling with.
-          Please note that your emergency contact will only be contacted as a
-          last resort.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="First name" required>

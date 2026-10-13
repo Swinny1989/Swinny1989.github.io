@@ -22,6 +22,7 @@ function BehaviourRow({
   options,
   onChange,
   onDetailsChange,
+  required,
 }: {
   label: string;
   value: YesNoSometimes | YesNo;
@@ -31,12 +32,16 @@ function BehaviourRow({
   options: readonly string[];
   onChange: (v: string) => void;
   onDetailsChange?: (v: string) => void;
+  required?: boolean;
 }) {
   const showDetails = hasDetails && (value === "Yes" || value === "Sometimes");
   return (
     <div className="flex flex-col gap-2 py-3 border-b border-stone-100 last:border-0">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-        <span className="text-sm text-[#6B6560] flex-1">{label}</span>
+        <span className="text-sm text-[#6B6560] flex-1">
+          {label}
+          {required && <span className="text-red-500 ml-0.5">*</span>}
+        </span>
         <ToggleGroup
           options={options as string[]}
           value={value}
@@ -70,6 +75,10 @@ export default function Step5Behaviour({
     onUpdate({ behaviour: { ...b, [field]: value } });
 
   const allAnswered =
+    b.commands !== "" &&
+    b.toysAndGames !== "" &&
+    b.dailyExercise !== "" &&
+    b.sleepsWhere !== "" &&
     b.boardedBefore !== "" &&
     b.likesCuddles !== "" &&
     b.stealsFood !== "" &&
@@ -93,42 +102,47 @@ export default function Step5Behaviour({
     <div className="flex flex-col gap-4">
       <SectionHeading>Personality & Routine</SectionHeading>
 
-      <Field label="Commands" hint="Include toileting commands (e.g. 'wees', 'business')">
+      <Field label="Commands" hint="Include toileting commands (e.g. 'wees', 'business')" required>
         <Textarea
           value={b.commands}
           onChange={(v) => update("commands", v)}
           placeholder="e.g. Sit, Stay, Down, Off, Leave, Wees"
           rows={2}
+          required
         />
       </Field>
 
-      <Field label="Favourite toys, games & activities">
+      <Field label="Favourite toys, games & activities" required>
         <Textarea
           value={b.toysAndGames}
           onChange={(v) => update("toysAndGames", v)}
           placeholder="What does your dog love to do?"
           rows={2}
+          required
         />
       </Field>
 
       <Field
         label="Daily exercise routine"
         hint="Number of walks, duration, and any activity limitations"
+        required
       >
         <Textarea
           value={b.dailyExercise}
           onChange={(v) => update("dailyExercise", v)}
           placeholder="e.g. 2 walks a day, 30 mins each. Can't run due to hip dysplasia."
           rows={3}
+          required
         />
       </Field>
 
-      <Field label="Where does your dog usually sleep overnight?">
+      <Field label="Where does your dog usually sleep overnight?" required>
         <Input
           value={b.sleepsWhere}
           onChange={(v) => update("sleepsWhere", v)}
           placeholder="e.g. Dog bed in bedroom, crate in kitchen, sofa"
           autoComplete="off"
+          required
         />
       </Field>
 
@@ -140,72 +154,84 @@ export default function Step5Behaviour({
           value={b.boardedBefore}
           options={YES_NO}
           onChange={(v) => update("boardedBefore", v as YesNo)}
+          required
         />
         <BehaviourRow
           label="Do they like cuddles?"
           value={b.likesCuddles}
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("likesCuddles", v as YesNoSometimes)}
+          required
         />
         <BehaviourRow
           label="Are they likely to steal food from people or surfaces?"
           value={b.stealsFood}
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("stealsFood", v as YesNoSometimes)}
+          required
         />
         <BehaviourRow
           label="Are they possessive with food?"
           value={b.possessiveFood}
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("possessiveFood", v as YesNoSometimes)}
+          required
         />
         <BehaviourRow
           label="Are they possessive with toys?"
           value={b.possessiveToys}
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("possessiveToys", v as YesNoSometimes)}
+          required
         />
         <BehaviourRow
           label="Will they jump up at people, children or dogs?"
           value={b.jumpsUp}
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("jumpsUp", v as YesNoSometimes)}
+          required
         />
         <BehaviourRow
           label="Are they likely to toilet indoors?"
           value={b.toiletsIndoors}
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("toiletsIndoors", v as YesNoSometimes)}
+          required
         />
         <BehaviourRow
           label="Are they happy to be left alone for short periods?"
           value={b.happyAlone}
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("happyAlone", v as YesNoSometimes)}
+          required
         />
         <BehaviourRow
           label="Do they bark at other dogs and/or people?"
           value={b.barksAtOthers}
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("barksAtOthers", v as YesNoSometimes)}
+          required
         />
         <BehaviourRow
           label="Will they recall when off lead?"
           value={b.recallOffLead}
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("recallOffLead", v as YesNoSometimes)}
+          required
         />
         <BehaviourRow
           label="Are they happy to travel in the car?"
           value={b.happyInCar}
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("happyInCar", v as YesNoSometimes)}
+          required
         />
         <BehaviourRow
           label="Are they happy in and around water?"
           value={b.happyNearWater}
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("happyNearWater", v as YesNoSometimes)}
+          required
         />
         <BehaviourRow
           label="Are they nervous or anxious?"
@@ -216,6 +242,7 @@ export default function Step5Behaviour({
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("nervousAnxious", v as YesNoSometimes)}
           onDetailsChange={(v) => update("nervousDetails", v)}
+          required
         />
         <BehaviourRow
           label="Do they show discomfort around loud noises (fireworks, thunder, traffic)?"
@@ -226,6 +253,7 @@ export default function Step5Behaviour({
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("loudNoises", v as YesNoSometimes)}
           onDetailsChange={(v) => update("loudNoisesDetails", v)}
+          required
         />
         <BehaviourRow
           label="Do they show destructive behaviour (scratching, chewing, destroying toys)?"
@@ -236,6 +264,7 @@ export default function Step5Behaviour({
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("destructive", v as YesNoSometimes)}
           onDetailsChange={(v) => update("destructiveDetails", v)}
+          required
         />
         <BehaviourRow
           label="Do they show escapist behaviour?"
@@ -246,6 +275,7 @@ export default function Step5Behaviour({
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("escapist", v as YesNoSometimes)}
           onDetailsChange={(v) => update("escapistDetails", v)}
+          required
         />
         <BehaviourRow
           label="Have they ever shown aggression towards other dogs?"
@@ -256,6 +286,7 @@ export default function Step5Behaviour({
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("aggressiveOtherDogs", v as YesNoSometimes)}
           onDetailsChange={(v) => update("aggressiveOtherDogsDetails", v)}
+          required
         />
         <BehaviourRow
           label="Have they ever shown aggression towards people, including children?"
@@ -266,6 +297,7 @@ export default function Step5Behaviour({
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("aggressivePeople", v as YesNoSometimes)}
           onDetailsChange={(v) => update("aggressivePeopleDetails", v)}
+          required
         />
       </div>
 

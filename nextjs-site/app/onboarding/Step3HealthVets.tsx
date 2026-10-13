@@ -41,13 +41,17 @@ export default function Step3HealthVets({
   const canContinue =
     h.lastVaccinationDate.trim() !== "" &&
     h.lastFleaTreatmentDate.trim() !== "" &&
+    h.nextFleaTreatmentDate.trim() !== "" &&
+    h.nextWormingDate.trim() !== "" &&
     h.lastWormingDate.trim() !== "" &&
+    h.lastKennelCoughDate.trim() !== "" &&
     v.vetName.trim() !== "" &&
     v.vetAddressLine1.trim() !== "" &&
     v.vetTown.trim() !== "" &&
     v.vetPostcode.trim() !== "" &&
     v.vetPhone.trim() !== "" &&
-    v.vetOutOfHoursPhone.trim() !== "";
+    v.vetOutOfHoursPhone.trim() !== "" &&
+    h.vaccinationDetails.trim() !== "";
 
   return (
     <div className="flex flex-col gap-4">
@@ -62,17 +66,18 @@ export default function Step3HealthVets({
             required
           />
         </Field>
-        <Field label="Date of last kennel cough vaccination">
+        <Field label="Date of last kennel cough vaccination" required>
           <Input
             value={h.lastKennelCoughDate}
             onChange={(v) => updateHealth("lastKennelCoughDate", v)}
             type="date"
+            required
           />
         </Field>
       </div>
 
       <Field
-        label="Vaccination details"
+        label="Vaccination details" required
         hint="e.g. Distemper, Parvovirus, Leptospirosis, Adenovirus"
       >
         <Textarea
@@ -80,6 +85,7 @@ export default function Step3HealthVets({
           onChange={(v) => updateHealth("vaccinationDetails", v)}
           placeholder="List vaccinations included in their certificate"
           rows={2}
+          required
         />
       </Field>
 
@@ -94,11 +100,12 @@ export default function Step3HealthVets({
             required
           />
         </Field>
-        <Field label="Next flea treatment due">
+        <Field label="Next flea treatment due" required>
           <Input
             value={h.nextFleaTreatmentDate}
             onChange={(v) => updateHealth("nextFleaTreatmentDate", v)}
             type="date"
+            required
           />
         </Field>
         <Field label="Last worming treatment date" required>
@@ -109,11 +116,12 @@ export default function Step3HealthVets({
             required
           />
         </Field>
-        <Field label="Next worming treatment due">
+        <Field label="Next worming treatment due" required>
           <Input
             value={h.nextWormingDate}
             onChange={(v) => updateHealth("nextWormingDate", v)}
             type="date"
+            required
           />
         </Field>
       </div>

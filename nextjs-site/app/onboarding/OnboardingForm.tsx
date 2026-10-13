@@ -9,6 +9,7 @@ import {
   TOTAL_STEPS,
 } from "./types";
 import { ProgressBar } from "./FormComponents";
+import { generateVetAuthPdf, buildPdfFileName } from "./generateVetAuthPdf";
 import Step1OwnerDetails from "./Step1OwnerDetails";
 import Step2DogDetails from "./Step2DogDetails";
 import Step3HealthVets from "./Step3HealthVets";
@@ -189,6 +190,111 @@ function flattenForSubmit(data: RegistrationData): Record<string, string> {
   };
 }
 
+// Cloudflare Worker endpoint that stores the vet-auth PDF in R2.
+// Set NEXT_PUBLIC_PDF_WORKER_URL in the environment / GitHub Actions build.
+const PDF_WORKER_URL = process.env.NEXT_PUBLIC_PDF_WORKER_URL ?? "";
+
+// Uploads the PDF to the worker. Non-blocking: resolves to true/false,
+// never throws, so a failure here cannot stop the overall submission.
+async function uploadVetAuthPdf(
+  pdf: Blob,
+  fileName: string,
+  meta: { owner: string; dog: string },
+): Promise<boolean> {
+  if (!PDF_WORKER_URL) return false;
+  try {
+    const body = new FormData();
+    body.append("file", pdf, fileName);
+    body.append("owner", meta.owner);
+    body.append("dog", meta.dog);
+    const res = await fetch(PDF_WORKER_URL, { method: "POST", body });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+// ── DEV ONLY: demo data for quickly populating the whole form ──────────────────
+// Referenced only inside dev-gated code, so it is tree-shaken from production.
+const DEV_DEMO_DATA: Partial<RegistrationData> = {
+  owner1: {
+    firstName: "Dev", surname: "Tester",
+    addressLine1: "1 Test Street", addressLine2: "",
+    town: "Congleton", postcode: "CW12 1AB",
+    mobile: "07700 900000", homePhone: "", email: "dev@example.com",
+  },
+  hasOwner2: false,
+  owner2: {
+    firstName: "", surname: "", addressLine1: "", addressLine2: "",
+    town: "", postcode: "", mobile: "", homePhone: "", email: "",
+  },
+  emergencyContact: {
+    firstName: "Emergency", surname: "Contact",
+    mobile: "07700 900111", homePhone: "", email: "ec@example.com",
+  },
+  dog: {
+    name: "Rex", dob: "2021-01-01", breed: "Labrador",
+    sex: "Male", weightKg: "25", neutered: "Yes",
+    microchipNumber: "985100000000000",
+  },
+  health: {
+    lastVaccinationDate: "2024-06-01", vaccinationDetails: "DHP, Lepto",
+    lastKennelCoughDate: "2024-06-01",
+    lastFleaTreatmentDate: "2024-09-01", nextFleaTreatmentDate: "2024-12-01",
+    lastWormingDate: "2024-09-01", nextWormingDate: "2024-12-01",
+    medicalConditions: "None", medications: "None", allergies: "None",
+    digestiveDisruptions: "None", lastSeasonDate: "", nextSeasonDate: "",
+  },
+  vet: {
+    vetName: "Test Vets", vetAddressLine1: "2 Vet Road", vetAddressLine2: "",
+    vetTown: "Congleton", vetPostcode: "CW12 2CD",
+    vetPhone: "01260 000000", vetOutOfHoursPhone: "01260 111111",
+  },
+  insurance: { insuranceProvider: "Petplan", policyNumber: "PP123", insurancePhone: "0330 000 0000" },
+  feeding: {
+    foodType: "Dry", foodBrand: "Royal Canin", quantityGrams: "250",
+    mealsPerDay: "2", mealTimes: "8am and 6pm", preparationDetails: "None",
+    treatsAllowed: "Yes", eatingStyle: "Eats immediately",
+    foodOriented: "Very food motivated", otherFeedingInstructions: "None",
+  },
+  behaviour: {
+    commands: "Sit, Stay, Come", toysAndGames: "Fetch", dailyExercise: "2 walks a day",
+    sleepsWhere: "Dog bed", otherBehaviourInfo: "Friendly",
+    boardedBefore: "Yes", likesCuddles: "Yes", stealsFood: "No",
+    possessiveFood: "No", possessiveToys: "No", jumpsUp: "No",
+    toiletsIndoors: "No", happyAlone: "Yes", barksAtOthers: "No",
+    recallOffLead: "Yes", happyInCar: "Yes", happyNearWater: "Yes",
+    nervousAnxious: "No", nervousDetails: "",
+    loudNoises: "No", loudNoisesDetails: "",
+    destructive: "No", destructiveDetails: "",
+    escapist: "No", escapistDetails: "",
+    aggressiveOtherDogs: "No", aggressiveOtherDogsDetails: "",
+    aggressivePeople: "No", aggressivePeopleDetails: "",
+  },
+  crateGrooming: {
+    usesCrateAtHome: "Yes", whenUsesCrate: "Overnight",
+    consentToCrate: "Yes", consentCrateDoorClosed: "Yes",
+    groomingSchedule: "Weekly brush",
+  },
+  consents: {
+    consentVetCare: true, consentMixWithDogs: true, consentTreats: true,
+    consentFedElsewhere: true, consentOffLead: true, consentTransportedInCar: true,
+    consentWalkedWithOtherDogs: true, consentCognitiveEnrichment: true,
+    consentSensoryEnrichment: true, consentPhysicalEnrichment: true,
+    consentSocialEnrichment: true, consentEnvironmentalEnrichment: true,
+    consentSecureFieldOffLead: true, consentPhotosVideos: true,
+    consentKeptTogetherOvernight: false,
+  },
+  tcAgreed: true,
+  signature: {
+    owner1SignedName: "Dev Tester", owner1SignedDate: "",
+    owner2SignedName: "", owner2SignedDate: "",
+    vetAuthOwner1SignedName: "Dev Tester", vetAuthOwner1Date: "",
+    vetAuthOwner2SignedName: "", vetAuthOwner2Date: "",
+    tcAgreed: true,
+  },
+};
+
 export default function OnboardingForm() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<RegistrationData>(INITIAL_FORM_DATA);
@@ -237,6 +343,16 @@ export default function OnboardingForm() {
   const next = useCallback(() => goTo(Math.min(step + 1, TOTAL_STEPS)), [step, goTo]);
   const back = useCallback(() => goTo(Math.max(step - 1, 1)), [step, goTo]);
 
+  // ── DEV ONLY ────────────────────────────────────────────────────────────────
+  // This block is stripped from the production build (NODE_ENV === "production").
+  const isDev = process.env.NODE_ENV !== "production";
+  const devFillAll = useCallback(() => {
+    updateForm(DEV_DEMO_DATA);
+  }, [updateForm]);
+  const devSkip = useCallback(() => {
+    goTo(Math.min(step + 1, TOTAL_STEPS));
+  }, [goTo, step]);
+
   const handleSubmit = useCallback(async () => {
     setIsSubmitting(true);
     setSubmitError(null);
@@ -245,15 +361,35 @@ export default function OnboardingForm() {
     const dogName = formData.dog.name || "dog";
     const ownerName = `${formData.owner1.firstName} ${formData.owner1.surname}`.trim();
 
+    // ── 1. Generate the vet-auth PDF and upload it to the worker (non-blocking) ──
+    // A failure here must never prevent the FormSubmit email, which is the
+    // source of truth. We record the outcome and surface it in the email.
+    let pdfStored = false;
+    try {
+      const pdf = await generateVetAuthPdf(formData);
+      const fileName = buildPdfFileName(formData);
+      pdfStored = await uploadVetAuthPdf(pdf, fileName, {
+        owner: ownerName,
+        dog: dogName,
+      });
+      if (!pdfStored) {
+        console.warn("Vet-auth PDF was not stored (worker unset or returned an error).");
+      }
+    } catch (err) {
+      console.warn("Vet-auth PDF generation failed:", err);
+    }
+
+    // ── 2. Send the FormSubmit email (source of truth) ──────────────────────────
     const payload: Record<string, string> = {
       _subject: `New Registration: ${dogName} — ${ownerName}`,
       _captcha: "false",
       _template: "table",
       ...flat,
+      "PDF stored": pdfStored ? "Yes" : "No",
     };
 
     try {
-      const res = await fetch("https://formsubmit.co/ajax/tom@tom-swindell.co.uk", {
+      const res = await fetch("https://formsubmit.co/ajax/katies-k9s@hotmail.com", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(payload),
@@ -311,6 +447,32 @@ export default function OnboardingForm() {
 
   return (
     <div>
+      {/* DEV ONLY — stripped from production build */}
+      {isDev && (
+        <div className="mb-4 flex flex-wrap items-center gap-2 rounded-xl border-2 border-dashed border-amber-400 bg-amber-50 px-4 py-3">
+          <span className="text-xs font-bold uppercase tracking-wide text-amber-700">
+            Dev tools
+          </span>
+          <button
+            type="button"
+            onClick={devFillAll}
+            className="rounded-full bg-amber-500 px-3 py-1 text-xs font-medium text-white hover:bg-amber-600"
+          >
+            Fill demo data
+          </button>
+          <button
+            type="button"
+            onClick={devSkip}
+            className="rounded-full bg-amber-500 px-3 py-1 text-xs font-medium text-white hover:bg-amber-600"
+          >
+            Skip step →
+          </button>
+          <span className="text-xs text-amber-700">
+            (bypasses validation — never shown in production)
+          </span>
+        </div>
+      )}
+
       <ProgressBar
         current={step}
         total={TOTAL_STEPS}

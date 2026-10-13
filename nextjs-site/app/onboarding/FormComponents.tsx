@@ -67,11 +67,13 @@ export function Textarea({
   onChange,
   placeholder,
   rows = 3,
+  required,
 }: {
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
   rows?: number;
+  required?: boolean;
 }) {
   return (
     <textarea
@@ -79,6 +81,7 @@ export function Textarea({
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       rows={rows}
+      required={required}
       className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-[#3D5A3E] placeholder-stone-300 focus:outline-none focus:ring-2 focus:ring-[#3D5A3E]/30 focus:border-[#3D5A3E] transition-colors text-base resize-none"
     />
   );

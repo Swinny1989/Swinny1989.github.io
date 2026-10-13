@@ -6,7 +6,8 @@
       "title": "Home Dog Boarding",
       "description": "Our home boarding provides a calm home from home stay where your dog lives as part of the family, enjoying their usual routines, daily walks, enrichment and plenty of love and attention while you’re away",
       "pricing": [
-        { "label": "Per night (up to 24 hours)", "price": "£45" }
+        { "label": "Per night (up to 24 hours)", "price": "£45" },
+        { "label": "Per night (Bank Holidays)", "price": "£50" }
       ],
       "note": "Additional charges apply for puppies under 12 months."
     },
@@ -16,7 +17,8 @@
       "title": "Day Care",
       "description": "Our ad-hoc doggy day care offers flexible, occasional care for days when you need a little extra help, giving your dog a safe, fun and relaxed place to spend the day with plenty of walks, play, enrichment and companionship",
       "pricing": [
-        { "label": "Up to 10 hours (8am – 6pm)", "price": "£30" }
+        { "label": "Up to 10 hours - Monday to Friday", "price": "£35" },
+        { "label": "Up to 10 hours - Saturday/Sunday/Bank Holidays", "price": "£40" }
       ],
       "note": "Additional charges apply for puppies under 12 months."
     }

@@ -14,3 +14,8 @@ nextjs-site/.env*
 
 # Editor
 .vscode/
+
+# Cloudflare Wrangler (local cache / account info)
+.wrangler/
+cloudflare-worker-pdf/node_modules/
+cloudflare-worker-pdf/.wrangler/

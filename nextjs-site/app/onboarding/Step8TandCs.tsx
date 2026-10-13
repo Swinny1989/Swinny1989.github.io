@@ -69,17 +69,18 @@ export default function Step8TandCs({
         </div>
 
         <div>
-          <h3 className="font-semibold text-[#3D5A3E] mb-2">4. Boarding and Wedding Chaperone Bookings</h3>
+          <h3 className="font-semibold text-[#3D5A3E] mb-2">4. Boarding, Trial and Wedding Chaperone Bookings</h3>
           <ul className="space-y-2">
             <li>4.1. A non-refundable deposit of 25% of the total booking cost is required at the time of booking to secure the reservation. The booking will not be considered confirmed until the deposit has been received.</li>
             <li>4.2. The remaining 75% balance must be paid in full 1 week prior to the dog(s)&apos; arrival and commencement of the booking, unless an alternative payment arrangement has been agreed in writing in advance.</li>
             <li>4.3. Payment may be made by cash or BACS bank transfer.</li>
-            <li>4.4. If a booking is cancelled more than 30 days before the scheduled arrival date, the 25% deposit will be retained and no further cancellation charge will normally apply.</li>
-            <li>4.5. If a booking is cancelled within 30 days of the scheduled arrival date, 50% of the total booking cost will be payable.</li>
-            <li>4.6. If a booking is cancelled within 14 days of the scheduled arrival date, 100% of the total booking cost will be payable.</li>
-            <li>4.7. Any amount already paid will be deducted from the applicable cancellation charge, and the owner will be responsible for paying any remaining amount due.</li>
-            <li>4.8. If the owner fails to attend a scheduled booking without providing prior notice, the booking will be treated as a no-show and the full cost of the booked service will remain payable. No refund, credit or transfer of the booking will be offered for no-show bookings.</li>
-            <li>4.9. Where permitted by applicable law, Katie&apos;s K9s reserves the right to charge reasonable interest and/or costs associated with overdue payments.</li>
+            <li>4.4. All trial stays must be paid for in full 1 week prior to the dogs arrival and commencement of the booking. If a trial stay is terminated early because the dog is deemed unsuitable for our setting, the full trial fee remains payable and no refund will be issued for any unused portion of the stay.</li>
+            <li>4.5. If a booking is cancelled more than 30 days before the scheduled arrival date, the 25% deposit will be retained and no further cancellation charge will normally apply.</li>
+            <li>4.6. If a booking is cancelled within 30 days of the scheduled arrival date, 50% of the total booking cost will be payable.</li>
+            <li>4.7. If a booking is cancelled within 14 days of the scheduled arrival date, 100% of the total booking cost will be payable.</li>
+            <li>4.8. Any amount already paid will be deducted from the applicable cancellation charge, and the owner will be responsible for paying any remaining amount due.</li>
+            <li>4.9. If the owner fails to attend a scheduled booking without providing prior notice, the booking will be treated as a no-show and the full cost of the booked service will remain payable. No refund, credit or transfer of the booking will be offered for no-show bookings.</li>
+            <li>4.10. Where permitted by applicable law, Katie&apos;s K9s reserves the right to charge reasonable interest and/or costs associated with overdue payments.</li>
           </ul>
         </div>
 
