@@ -1,21 +1,44 @@
 # Katie's K9s — Vet Authorisation PDF Worker
 
-Cloudflare Worker that receives the vet-authorisation PDF from the onboarding
-form and stores it in an R2 bucket. The PDF is a convenience archive — the
-FormSubmit email remains the source of truth, so a failure here never blocks a
-submission.
+Cloudflare Worker for the onboarding form. It does two jobs, chosen by the
+request `Content-Type`:
+
+1. **Stores the vet-authorisation PDF** in an R2 bucket (`multipart/form-data`).
+2. **Forwards each submission to Make.com** for Excel logging (`application/json`).
+
+Both are convenience features — the FormSubmit email remains the source of
+truth, so a failure here never blocks a submission.
 
 ## What it does
 
-- Accepts `POST` `multipart/form-data` with fields:
-  - `file` — the PDF (required, max 10 MB, must be `application/pdf`)
-  - `ownerFirstName` — owner's first name (used in the path + metadata)
-  - `ownerSurname` — owner's surname (used in the path + metadata)
-  - `dog` — dog name (used in the path + metadata)
-- Handles the browser CORS preflight (`OPTIONS`).
-- Stores the object at `vet-auth/<surname>-<firstname>/<dog>/<timestamp>-<filename>.pdf`
-  (each path segment is slugified; empty values fall back to `unknown-owner` / `unknown-dog`).
-- Returns `{ ok: true, key }` on success.
+**PDF upload** — `POST` `multipart/form-data` with fields:
+- `file` — the PDF (required, max 10 MB, must be `application/pdf`)
+- `ownerFirstName` — owner's first name (used in the path + metadata)
+- `ownerSurname` — owner's surname (used in the path + metadata)
+- `dog` — dog name (used in the path + metadata)
+
+Stores the object at `vet-auth/<surname>-<firstname>/<dog>/<timestamp>-<filename>.pdf`
+(each path segment is slugified; empty values fall back to `unknown-owner` /
+`unknown-dog`). Returns `{ ok: true, key }`.
+
+**Sheet logging** — `POST` `application/json` with the flat submission record.
+The worker forwards the body to the `MAKE_WEBHOOK_URL` secret, which logs it to
+the OneDrive Excel sheet. Returns `{ ok: true }`. Routing it through the worker
+keeps the webhook URL out of the public client bundle.
+
+Both routes handle the browser CORS preflight (`OPTIONS`) and enforce the
+`ALLOWED_ORIGIN` allow-list.
+
+## Logging
+
+Observability is enabled in `wrangler.toml`, giving free searchable logs in the
+Cloudflare dashboard (~3 day retention). The worker logs **outcomes only**
+(status codes, success/failure) and never the submission contents, so no
+personal data is written to the log store. For a live stream while debugging:
+
+```bash
+wrangler tail
+```
 
 ## One-time setup
 
@@ -34,10 +57,20 @@ wrangler r2 bucket create katiesk9s-vet-auth
 
 The bucket name must match `bucket_name` in `wrangler.toml`.
 
-### 2. Deploy the worker
+### 2. Set the Make webhook secret
 
 ```bash
 cd cloudflare-worker-pdf
+wrangler secret put MAKE_WEBHOOK_URL
+# paste the Make.com webhook URL when prompted
+```
+
+If this secret is not set, sheet logging simply returns a 503 and the form
+records `Logged to sheet: No` — nothing else breaks.
+
+### 3. Deploy the worker
+
+```bash
 wrangler deploy
 ```
 
@@ -47,7 +80,7 @@ Wrangler prints the deployed URL, e.g.:
 https://katiesk9s-vet-auth.<your-subdomain>.workers.dev
 ```
 
-### 3. Point the site at the worker
+### 4. Point the site at the worker
 
 Set the environment variable used by the Next.js build:
 

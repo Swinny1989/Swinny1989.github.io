@@ -195,6 +195,23 @@ function flattenForSubmit(data: RegistrationData): Record<string, string> {
 // Set NEXT_PUBLIC_PDF_WORKER_URL in the environment / GitHub Actions build.
 const PDF_WORKER_URL = process.env.NEXT_PUBLIC_PDF_WORKER_URL ?? "";
 
+// Logs the submission to the Excel sheet by POSTing the flat JSON record to the
+// Cloudflare worker, which forwards it server-side to the Make.com webhook. This
+// keeps the webhook URL out of the client bundle. Non-blocking: never throws.
+async function sendToSheet(payload: Record<string, string>): Promise<boolean> {
+  if (!PDF_WORKER_URL) return false;
+  try {
+    const res = await fetch(PDF_WORKER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
 // Uploads the PDF to the worker. Non-blocking: resolves to true/false,
 // never throws, so a failure here cannot stop the overall submission.
 async function uploadVetAuthPdf(
@@ -383,13 +400,23 @@ export default function OnboardingForm() {
       console.warn("Vet-auth PDF generation failed:", err);
     }
 
-    // ── 2. Send the FormSubmit email (source of truth) ──────────────────────────
+    // ── 2. Send the flat JSON to Make (logs to Excel). Non-blocking. ─────────────
+    const record: Record<string, string> = {
+      ...flat,
+      "PDF stored": pdfStored ? "Yes" : "No",
+    };
+    const loggedToSheet = await sendToSheet(record);
+    if (!loggedToSheet) {
+      console.warn("Submission was not logged to the sheet (worker unset or returned an error).");
+    }
+
+    // ── 3. Send the FormSubmit email (source of truth) ──────────────────────────
     const payload: Record<string, string> = {
       _subject: `New Registration: ${dogName} — ${ownerName}`,
       _captcha: "false",
       _template: "table",
-      ...flat,
-      "PDF stored": pdfStored ? "Yes" : "No",
+      ...record,
+      "Logged to sheet": loggedToSheet ? "Yes" : "No",
     };
 
     try {

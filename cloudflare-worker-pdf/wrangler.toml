@@ -2,6 +2,11 @@ name = "katiesk9s-vet-auth"
 main = "worker.js"
 compatibility_date = "2024-11-01"
 
+# Free persistent logs in the Cloudflare dashboard (~3 day retention).
+# The worker only logs outcomes, never submission contents / PII.
+[observability]
+enabled = true
+
 # Public var (not a secret) — the only browser origin allowed to POST.
 [vars]
 ALLOWED_ORIGIN = "https://katiesk9s.co.uk"
@@ -10,3 +15,9 @@ ALLOWED_ORIGIN = "https://katiesk9s.co.uk"
 [[r2_buckets]]
 binding = "R2_BUCKET"
 bucket_name = "katiesk9s-vet-auth"
+
+# ── Secret (do NOT put the value here) ───────────────────────────────────────
+# MAKE_WEBHOOK_URL — the Make.com webhook the worker forwards submissions to.
+# Set it with:
+#   wrangler secret put MAKE_WEBHOOK_URL
+# then paste the webhook URL when prompted.
