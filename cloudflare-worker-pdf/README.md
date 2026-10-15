@@ -9,10 +9,12 @@ submission.
 
 - Accepts `POST` `multipart/form-data` with fields:
   - `file` — the PDF (required, max 10 MB, must be `application/pdf`)
-  - `owner` — owner name (stored as object metadata)
-  - `dog` — dog name (stored as object metadata)
+  - `ownerFirstName` — owner's first name (used in the path + metadata)
+  - `ownerSurname` — owner's surname (used in the path + metadata)
+  - `dog` — dog name (used in the path + metadata)
 - Handles the browser CORS preflight (`OPTIONS`).
-- Stores the object at `vet-auth/<year>/<month>/<timestamp>-<filename>.pdf`.
+- Stores the object at `vet-auth/<surname>-<firstname>/<dog>/<timestamp>-<filename>.pdf`
+  (each path segment is slugified; empty values fall back to `unknown-owner` / `unknown-dog`).
 - Returns `{ ok: true, key }` on success.
 
 ## One-time setup
@@ -86,7 +88,7 @@ For local worker testing against a staging site, temporarily change
 wrangler r2 object list katiesk9s-vet-auth --prefix vet-auth/
 
 # download one
-wrangler r2 object get katiesk9s-vet-auth vet-auth/2026/10/1699999999999-vet-auth-2026-10-13-rex-dev-tester.pdf --file ./rex.pdf
+wrangler r2 object get katiesk9s-vet-auth vet-auth/tester-dev/rex/1699999999999-vet-auth-2026-10-13-rex-dev-tester.pdf --file ./rex.pdf
 ```
 
 Objects also carry `owner`, `dog` and `uploadedAt` custom metadata.

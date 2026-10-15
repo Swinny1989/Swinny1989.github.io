@@ -40,6 +40,50 @@ collections:
               - { label: "Review text", name: "body", widget: "text" }
               - { label: "Customer name", name: "author", widget: "string" }
 
+  - name: "legal"
+    label: "Legal"
+    files:
+      - name: "privacy-policy"
+        label: "Privacy Policy"
+        file: "nextjs-site/content/legal.json"
+        fields:
+          - label: "Privacy Policy"
+            name: "privacyPolicy"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Intro", name: "intro", widget: "text" }
+              - { label: "Last updated", name: "lastUpdated", widget: "string", required: false }
+              - label: "Sections"
+                name: "sections"
+                widget: "list"
+                summary: "{{fields.heading}}"
+                fields:
+                  - { label: "Heading", name: "heading", widget: "string" }
+                  - label: "Clauses"
+                    name: "clauses"
+                    widget: "list"
+                    field: { label: "Clause", name: "clause", widget: "text" }
+          # The Terms & Conditions object is preserved untouched when editing this file.
+          - label: "Terms & Conditions"
+            name: "termsAndConditions"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Intro", name: "intro", widget: "text" }
+              - { label: "Last updated", name: "lastUpdated", widget: "string", required: false }
+              - label: "Sections"
+                name: "sections"
+                widget: "list"
+                summary: "{{fields.heading}}"
+                fields:
+                  - { label: "Heading", name: "heading", widget: "string" }
+                  - label: "Clauses"
+                    name: "clauses"
+                    widget: "list"
+                    field: { label: "Clause", name: "clause", widget: "text" }
+
   - name: "services"
     label: "Services"
     files:

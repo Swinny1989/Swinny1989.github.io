@@ -169,8 +169,9 @@ function flattenForSubmit(data: RegistrationData): Record<string, string> {
     "Consent - Photos/Videos": yn(d.consents.consentPhotosVideos),
     "Consent - Kept Together Overnight": yn(d.consents.consentKeptTogetherOvernight),
 
-    // T&Cs
+    // T&Cs & Privacy
     "Terms Agreed": yn(d.tcAgreed),
+    "Privacy Policy Agreed": yn(d.privacyAgreed),
 
     // Signatures
     "Owner 1 Signed Name": d.signature.owner1SignedName,
@@ -199,13 +200,14 @@ const PDF_WORKER_URL = process.env.NEXT_PUBLIC_PDF_WORKER_URL ?? "";
 async function uploadVetAuthPdf(
   pdf: Blob,
   fileName: string,
-  meta: { owner: string; dog: string },
+  meta: { ownerFirstName: string; ownerSurname: string; dog: string },
 ): Promise<boolean> {
   if (!PDF_WORKER_URL) return false;
   try {
     const body = new FormData();
     body.append("file", pdf, fileName);
-    body.append("owner", meta.owner);
+    body.append("ownerFirstName", meta.ownerFirstName);
+    body.append("ownerSurname", meta.ownerSurname);
     body.append("dog", meta.dog);
     const res = await fetch(PDF_WORKER_URL, { method: "POST", body });
     return res.ok;
@@ -286,6 +288,7 @@ const DEV_DEMO_DATA: Partial<RegistrationData> = {
     consentKeptTogetherOvernight: false,
   },
   tcAgreed: true,
+  privacyAgreed: true,
   signature: {
     owner1SignedName: "Dev Tester", owner1SignedDate: "",
     owner2SignedName: "", owner2SignedDate: "",
@@ -369,7 +372,8 @@ export default function OnboardingForm() {
       const pdf = await generateVetAuthPdf(formData);
       const fileName = buildPdfFileName(formData);
       pdfStored = await uploadVetAuthPdf(pdf, fileName, {
-        owner: ownerName,
+        ownerFirstName: formData.owner1.firstName,
+        ownerSurname: formData.owner1.surname,
         dog: dogName,
       });
       if (!pdfStored) {

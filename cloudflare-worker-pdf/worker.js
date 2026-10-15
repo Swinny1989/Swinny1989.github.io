@@ -77,19 +77,33 @@ export default {
       return json({ error: "File too large" }, 413, cors);
     }
 
-    const owner = (form.get("owner") || "").toString().slice(0, 200);
+    const firstName = (form.get("ownerFirstName") || "").toString().slice(0, 100);
+    const surname = (form.get("ownerSurname") || "").toString().slice(0, 100);
     const dog = (form.get("dog") || "").toString().slice(0, 200);
+    const owner = `${firstName} ${surname}`.trim();
 
     // ── Build a safe object key ────────────────────────────────────────────────
+    // Path layout: vet-auth/<surname>-<firstname>/<dog>/<timestamp>-<file>.pdf
+    // Slugify each path segment so it is safe as an object key.
+    const slug = (s, fallback) => {
+      const out = s
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+      return out || fallback;
+    };
+
+    const ownerSeg = slug(`${surname}-${firstName}`, "unknown-owner");
+    const dogSeg = slug(dog, "unknown-dog");
+
     const providedName = (file.name || "vet-auth.pdf").toString();
     const safeName = providedName
       .replace(/[^a-zA-Z0-9._-]/g, "-")
       .replace(/-+/g, "-")
       .slice(0, 160);
+
     const now = new Date();
-    const yyyy = now.getUTCFullYear();
-    const mm = String(now.getUTCMonth() + 1).padStart(2, "0");
-    const key = `vet-auth/${yyyy}/${mm}/${Date.now()}-${safeName}`;
+    const key = `vet-auth/${ownerSeg}/${dogSeg}/${Date.now()}-${safeName}`;
 
     // ── Store in R2 ──────────────────────────────────────────────────────────────
     try {

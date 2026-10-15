@@ -161,6 +161,7 @@ export interface FormData {
   crateGrooming: CrateGroomingDetails;
   consents: ConsentsDetails;
   tcAgreed: boolean;
+  privacyAgreed: boolean;
   signature: SignatureDetails;
 }
 
@@ -295,6 +296,7 @@ export const INITIAL_FORM_DATA: FormData = {
     consentKeptTogetherOvernight: false,
   },
   tcAgreed: false,
+  privacyAgreed: false,
   signature: {
     owner1SignedName: "",
     owner1SignedDate: "",
