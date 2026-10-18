@@ -249,7 +249,7 @@ export default function Step5Behaviour({
           value={b.loudNoises}
           hasDetails
           detailsValue={b.loudNoisesDetails}
-          detailsPlaceholder="Describe their reaction"
+          detailsPlaceholder="What noises make them uncomfortable? How do they react?"
           options={YES_NO_SOMETIMES}
           onChange={(v) => update("loudNoises", v as YesNoSometimes)}
           onDetailsChange={(v) => update("loudNoisesDetails", v)}

@@ -6,7 +6,6 @@ import {
   Input,
   ToggleGroup,
   SectionHeading,
-  InfoBanner,
   StepNav,
 } from "./FormComponents";
 
@@ -108,13 +107,6 @@ export default function Step2DogDetails({
           required
         />
       </Field>
-
-      <InfoBanner>
-        All dogs must be fully vaccinated and treated for fleas and worms. A
-        current vaccination certificate must be presented before your booking is
-        accepted. New treatments or vaccination courses must be administered at
-        least <strong>14 days prior to </strong>your dog&apos;s stay.
-      </InfoBanner>
 
       <StepNav
         onBack={onBack}

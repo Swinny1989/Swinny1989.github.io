@@ -16,12 +16,14 @@ function OwnerBlock({
   onChange,
   autoPrefix,
   required,
+  onCopyAddress,
 }: {
   title: string;
   data: OwnerDetails;
   onChange: (field: keyof OwnerDetails, value: string) => void;
   autoPrefix: string;
   required?: boolean;
+  onCopyAddress?: () => void;
 }) {
   return (
     <div className="flex flex-col gap-4">
@@ -45,6 +47,28 @@ function OwnerBlock({
         </Field>
       </div>
       <Field label="Address" required={required}>
+        {onCopyAddress && (
+          <button
+            type="button"
+            onClick={onCopyAddress}
+            className="self-start mb-1 inline-flex items-center gap-1.5 rounded-full border border-[#3D5A3E] bg-white px-3 py-1.5 text-xs font-medium text-[#3D5A3E] transition-colors hover:bg-[#3D5A3E] hover:text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-3.5 h-3.5"
+            >
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            Copy address from Owner 1
+          </button>
+        )}
         <AddressBlock
           addressLine1={data.addressLine1}
           addressLine2={data.addressLine2}
@@ -107,6 +131,17 @@ export default function Step1OwnerDetails({
   const updateOwner2 = (field: keyof OwnerDetails, value: string) =>
     onUpdate({ owner2: { ...data.owner2, [field]: value } });
 
+  const copyOwner1Address = () =>
+    onUpdate({
+      owner2: {
+        ...data.owner2,
+        addressLine1: data.owner1.addressLine1,
+        addressLine2: data.owner1.addressLine2,
+        town: data.owner1.town,
+        postcode: data.owner1.postcode,
+      },
+    });
+
   const updateEmergency = (field: keyof EmergencyContact, value: string) =>
     onUpdate({
       emergencyContact: { ...data.emergencyContact, [field]: value },
@@ -150,6 +185,7 @@ export default function Step1OwnerDetails({
         onChange={updateOwner2}
         autoPrefix="section-owner2 "
         required={false}
+        onCopyAddress={copyOwner1Address}
       />
 
       {/* Emergency contact */}

@@ -17,8 +17,7 @@ import Step4Feeding from "./Step4Feeding";
 import Step5Behaviour from "./Step5Behaviour";
 import Step6CrateGrooming from "./Step6CrateGrooming";
 import Step7Consents from "./Step7Consents";
-import Step8TandCs from "./Step8TandCs";
-import Step9Signature from "./Step9Signature";
+import Step8Agreements from "./Step8Agreements";
 
 const STEP_LABELS = [
   "Your Details",
@@ -28,8 +27,7 @@ const STEP_LABELS = [
   "Behaviour",
   "Crate & Grooming",
   "Consents",
-  "Terms & Conditions",
-  "Sign & Submit",
+  "Agreements & Sign-off",
 ];
 
 // Flatten RegistrationData into a flat key-value object for FormSubmit hidden fields
@@ -37,6 +35,8 @@ function flattenForSubmit(data: RegistrationData): Record<string, string> {
   const today = new Date().toISOString();
   const yn = (v: boolean) => (v ? "Yes" : "No");
   const d = data;
+  const hasOwner2 =
+    d.owner2.firstName.trim() !== "" || d.owner2.surname.trim() !== "";
 
   return {
     // Owner 1
@@ -47,9 +47,9 @@ function flattenForSubmit(data: RegistrationData): Record<string, string> {
     "Owner 1 Home Phone": d.owner1.homePhone,
     "Owner 1 Email": d.owner1.email,
 
-    // Owner 2
-    "Owner 2 (present)": yn(d.hasOwner2),
-    ...(d.hasOwner2 ? {
+    // Owner 2 — present if either name field has been filled in
+    "Owner 2 (present)": yn(hasOwner2),
+    ...(hasOwner2 ? {
       "Owner 2 First Name": d.owner2.firstName,
       "Owner 2 Surname": d.owner2.surname,
       "Owner 2 Address": [d.owner2.addressLine1, d.owner2.addressLine2, d.owner2.town, d.owner2.postcode].filter(Boolean).join(", "),
@@ -169,23 +169,14 @@ function flattenForSubmit(data: RegistrationData): Record<string, string> {
     "Consent - Photos/Videos": yn(d.consents.consentPhotosVideos),
     "Consent - Kept Together Overnight": yn(d.consents.consentKeptTogetherOvernight),
 
-    // T&Cs & Privacy
+    // Agreements
+    "Veterinary Authorisation Agreed": yn(d.vetAuthAgreed),
     "Terms Agreed": yn(d.tcAgreed),
     "Privacy Policy Agreed": yn(d.privacyAgreed),
 
-    // Signatures
+    // Sign-off — only Owner 1 signs
     "Owner 1 Signed Name": d.signature.owner1SignedName,
     "Owner 1 Signature Date": today,
-    ...(d.owner2.firstName.trim() || d.owner2.surname.trim() ? {
-      "Owner 2 Signed Name": d.signature.owner2SignedName,
-      "Owner 2 Signature Date": today,
-    } : {}),
-    "Vet Auth Owner 1 Signed Name": d.signature.vetAuthOwner1SignedName,
-    "Vet Auth Owner 1 Date": today,
-    ...(d.owner2.firstName.trim() || d.owner2.surname.trim() ? {
-      "Vet Auth Owner 2 Signed Name": d.signature.vetAuthOwner2SignedName,
-      "Vet Auth Owner 2 Date": today,
-    } : {}),
 
     "Submission Timestamp": today,
   };
@@ -304,14 +295,12 @@ const DEV_DEMO_DATA: Partial<RegistrationData> = {
     consentSecureFieldOffLead: true, consentPhotosVideos: true,
     consentKeptTogetherOvernight: false,
   },
+  vetAuthAgreed: true,
   tcAgreed: true,
   privacyAgreed: true,
   signature: {
-    owner1SignedName: "Dev Tester", owner1SignedDate: "",
-    owner2SignedName: "", owner2SignedDate: "",
-    vetAuthOwner1SignedName: "Dev Tester", vetAuthOwner1Date: "",
-    vetAuthOwner2SignedName: "", vetAuthOwner2Date: "",
-    tcAgreed: true,
+    owner1SignedName: "Dev Tester",
+    owner1SignedDate: "",
   },
 };
 
@@ -539,10 +528,7 @@ export default function OnboardingForm() {
           <Step7Consents {...stepProps} onBack={back} onNext={next} />
         )}
         {step === 8 && (
-          <Step8TandCs {...stepProps} onBack={back} onNext={next} />
-        )}
-        {step === 9 && (
-          <Step9Signature
+          <Step8Agreements
             {...stepProps}
             onBack={back}
             onSubmit={handleSubmit}

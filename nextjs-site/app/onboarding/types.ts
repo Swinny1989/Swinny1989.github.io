@@ -138,13 +138,6 @@ export interface ConsentsDetails {
 export interface SignatureDetails {
   owner1SignedName: string;
   owner1SignedDate: string;
-  owner2SignedName: string;
-  owner2SignedDate: string;
-  vetAuthOwner1SignedName: string;
-  vetAuthOwner1Date: string;
-  vetAuthOwner2SignedName: string;
-  vetAuthOwner2Date: string;
-  tcAgreed: boolean;
 }
 
 export interface FormData {
@@ -160,6 +153,7 @@ export interface FormData {
   behaviour: BehaviourDetails;
   crateGrooming: CrateGroomingDetails;
   consents: ConsentsDetails;
+  vetAuthAgreed: boolean;
   tcAgreed: boolean;
   privacyAgreed: boolean;
   signature: SignatureDetails;
@@ -295,21 +289,17 @@ export const INITIAL_FORM_DATA: FormData = {
     consentPhotosVideos: false,
     consentKeptTogetherOvernight: false,
   },
+  vetAuthAgreed: false,
   tcAgreed: false,
   privacyAgreed: false,
   signature: {
     owner1SignedName: "",
     owner1SignedDate: "",
-    owner2SignedName: "",
-    owner2SignedDate: "",
-    vetAuthOwner1SignedName: "",
-    vetAuthOwner1Date: "",
-    vetAuthOwner2SignedName: "",
-    vetAuthOwner2Date: "",
-    tcAgreed: false,
   },
 };
 
-export const STORAGE_KEY = "kk9s_onboarding_v1";
-export const STEP_KEY = "kk9s_onboarding_step_v1";
-export const TOTAL_STEPS = 9;
+// Storage key bumped to v2 — the data shape changed (signature + agreements),
+// so stale v1 localStorage must not be rehydrated into the new structure.
+export const STORAGE_KEY = "kk9s_onboarding_v2";
+export const STEP_KEY = "kk9s_onboarding_step_v2";
+export const TOTAL_STEPS = 8;

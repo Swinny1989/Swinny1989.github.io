@@ -175,10 +175,7 @@ export async function generateVetAuthPdf(data: FormData): Promise<Blob> {
     y += bh + 5;
   }
 
-  sigBlock("Owner 1 — Veterinary Authorisation", data.signature.vetAuthOwner1SignedName);
-  if (hasOwner2) {
-    sigBlock("Owner 2 — Veterinary Authorisation", data.signature.vetAuthOwner2SignedName);
-  }
+  sigBlock("Owner 1 — Signed", data.signature.owner1SignedName);
 
   // ── Footer ───────────────────────────────────────────────────────────────────
   doc.setFillColor(...C.cream);
