@@ -164,14 +164,14 @@ export default function Step1OwnerDetails({
       {/* Intro blurb — page 1 only */}
       <InfoBanner>
         We kindly ask you to complete all information on the below form to allow
-        us to make your dog/s as comfortable as possible during their time with
+        us to make your dog as comfortable as possible during their time with
         Katie&apos;s K9s. Some information is mandatory to comply with our boarding
         licence; dogs are not legally able to stay unless this information is
         obtained.
       </InfoBanner>
 
       <OwnerBlock
-        title="Your Details"
+        title="Your Details (Owner 1)"
         data={data.owner1}
         onChange={updateOwner1}
         autoPrefix=""

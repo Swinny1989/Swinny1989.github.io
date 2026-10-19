@@ -346,8 +346,14 @@ export default function OnboardingForm() {
     try {
       localStorage.setItem(STEP_KEY, String(n));
     } catch {}
-    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
+  // Scroll to top after the new step has rendered. Doing this inside goTo (before
+  // render) animated against the old, taller page and left the user part-way down.
+  useEffect(() => {
+    if (!hydrated) return; // don't fight the restore-from-localStorage on mount
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [step, hydrated]);
 
   const next = useCallback(() => goTo(Math.min(step + 1, TOTAL_STEPS)), [step, goTo]);
   const back = useCallback(() => goTo(Math.max(step - 1, 1)), [step, goTo]);

@@ -69,13 +69,11 @@ export default function Step8Agreements({
       {/* ── Veterinary Authorisation ─────────────────────────────────────── */}
       <div className="flex flex-col gap-3">
         <SectionHeading>Veterinary Authorisation</SectionHeading>
+        <InfoBanner>
+          If your dog requires veterinary attention during their stay with Katie&apos;s K9s, we will always endeavour to use your dog&apos;s usual veterinary practice and consult with you before any treatment or action is taken, wherever reasonably possible.
+          In an emergency, or where circumstances or our location make it necessary, we may instead use our registered veterinary practice, Millie&apos;s Vets, 6 John Bradshaw Close, Congleton CW12 1LB. 
+        </InfoBanner>
         <div className="bg-white rounded-xl border border-stone-100 p-4 text-sm text-[#6B6560] leading-relaxed">
-          <p className="font-medium text-[#3D5A3E] mb-2">
-            Katie&apos;s K9s&apos; registered veterinary practice:
-          </p>
-          <address className="not-italic mb-4">
-            Millie&apos;s Vets, 6 John Bradshaw Close, Congleton CW12 1LB
-          </address>
           <p className="mb-2">
             You agree that, during your absence, Katie&apos;s K9s may care for your
             dog(s) and, if necessary, transport them to a veterinary surgery for
@@ -157,12 +155,12 @@ export default function Step8Agreements({
         <SectionHeading>Declaration &amp; Sign-off</SectionHeading>
         <InfoBanner>
           I confirm that I am Owner 1 and that all information provided in this
-          registration is accurate and complete to the best of my knowledge. I
+          registration is accurate and complete. I
           confirm that I have carefully read and understood all information
           presented throughout the registration process and acknowledge and
           agree to the applicable terms, policies, consents, authorisations and
           declarations. By submitting this form, I confirm my acceptance of
-          these and provide my sign-off on this registration.
+          these and provide my sign off on this registration.
         </InfoBanner>
 
         <div className="bg-white rounded-xl border border-stone-100 p-4 flex flex-col gap-4">
