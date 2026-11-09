@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   FormData as RegistrationData,
   INITIAL_FORM_DATA,
@@ -30,7 +30,8 @@ const STEP_LABELS = [
   "Agreements & Sign-off",
 ];
 
-// Flatten RegistrationData into a flat key-value object for FormSubmit hidden fields
+// Flatten RegistrationData into the flat key-value record that is emailed to Katie
+// (as a JSON attachment) and logged to the Excel sheet
 function flattenForSubmit(data: RegistrationData): Record<string, string> {
   const today = new Date().toISOString();
   const yn = (v: boolean) => (v ? "Yes" : "No");
@@ -64,6 +65,10 @@ function flattenForSubmit(data: RegistrationData): Record<string, string> {
     "Emergency Contact Mobile": d.emergencyContact.mobile,
     "Emergency Contact Home Phone": d.emergencyContact.homePhone,
     "Emergency Contact Email": d.emergencyContact.email,
+
+    // Where they heard about us (optional)
+    "Heard About Us": d.referral.source,
+    "Heard About Us Details": d.referral.details,
 
     // Dog
     "Dog Name": d.dog.name,
@@ -182,24 +187,66 @@ function flattenForSubmit(data: RegistrationData): Record<string, string> {
   };
 }
 
-// Cloudflare Worker endpoint that stores the vet-auth PDF in R2.
-// Set NEXT_PUBLIC_PDF_WORKER_URL in the environment / GitHub Actions build.
-const PDF_WORKER_URL = process.env.NEXT_PUBLIC_PDF_WORKER_URL ?? "";
+// Cloudflare Worker that receives the registration (emails Katie with the JSON
+// attached, logs it to Excel) and stores the vet-auth PDF in R2.
+// Override with NEXT_PUBLIC_PDF_WORKER_URL at build time. `||` (not `??`) so an
+// empty value, e.g. an unset GitHub variable, still falls back to the live worker.
+const PDF_WORKER_URL =
+  process.env.NEXT_PUBLIC_PDF_WORKER_URL ||
+  "https://katiesk9s-vet-auth.tom-ec0.workers.dev";
 
-// Logs the submission to the Excel sheet by POSTing the flat JSON record to the
-// Cloudflare worker, which forwards it server-side to the Make.com webhook. This
-// keeps the webhook URL out of the client bundle. Non-blocking: never throws.
-async function sendToSheet(payload: Record<string, string>): Promise<boolean> {
-  if (!PDF_WORKER_URL) return false;
-  try {
-    const res = await fetch(PDF_WORKER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    return res.ok;
-  } catch {
-    return false;
+type SubmitFailure = "offline" | "network" | "server" | "rejected";
+type SubmitResult = { ok: true } | { ok: false; kind: SubmitFailure };
+
+const SUBMIT_TIMEOUT_MS = 20000;
+const SUBMIT_ATTEMPTS = 2;
+
+const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+
+// Sends the registration to the worker. Retries once on network errors, timeouts
+// and 5xx/429; never retries other 4xx (the same request would fail again).
+// Safe to retry: the worker de-duplicates identical emails.
+async function submitRecord(record: Record<string, string>): Promise<SubmitResult> {
+  if (typeof navigator !== "undefined" && navigator.onLine === false) {
+    return { ok: false, kind: "offline" };
+  }
+
+  let failure: SubmitFailure = "network";
+  for (let attempt = 1; attempt <= SUBMIT_ATTEMPTS; attempt++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), SUBMIT_TIMEOUT_MS);
+    try {
+      const res = await fetch(PDF_WORKER_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(record),
+        signal: controller.signal,
+      });
+      if (res.ok) return { ok: true };
+      if (res.status >= 400 && res.status < 500 && res.status !== 429) {
+        return { ok: false, kind: "rejected" };
+      }
+      failure = "server";
+    } catch {
+      failure = "network";
+    } finally {
+      clearTimeout(timer);
+    }
+    if (attempt < SUBMIT_ATTEMPTS) await sleep(1500);
+  }
+  return { ok: false, kind: failure };
+}
+
+const CONTACT_FALLBACK = "please call 07540 316 692 or email katies-k9s@hotmail.com";
+
+function submitErrorMessage(kind: SubmitFailure): string {
+  switch (kind) {
+    case "offline":
+      return "You appear to be offline. Please reconnect and press Submit again. Your answers are saved on this device.";
+    case "network":
+      return `We couldn't reach our server. This can be caused by a weak signal, a VPN or a content blocker. Your answers are saved on this device, so please try again. If it keeps failing, ${CONTACT_FALLBACK}.`;
+    default:
+      return `Something went wrong sending your registration. Your answers are saved on this device, so please try again in a moment. If it keeps failing, ${CONTACT_FALLBACK}.`;
   }
 }
 
@@ -242,6 +289,7 @@ const DEV_DEMO_DATA: Partial<RegistrationData> = {
     firstName: "Emergency", surname: "Contact",
     mobile: "07700 900111", homePhone: "", email: "ec@example.com",
   },
+  referral: { source: "Friend/relative", details: "Dev demo" },
   dog: {
     name: "Rex", dob: "2021-01-01", breed: "Labrador",
     sex: "Male", weightKg: "25", neutered: "Yes",
@@ -311,13 +359,18 @@ export default function OnboardingForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const errorRef = useRef<HTMLDivElement>(null);
+  // True once this exact data's PDF is in R2, so a retry doesn't re-generate/re-upload it.
+  const pdfStoredRef = useRef(false);
 
   // Load from localStorage on mount
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       const savedStep = localStorage.getItem(STEP_KEY);
-      if (saved) setFormData(JSON.parse(saved));
+      // Merge over the defaults so progress saved before a new field existed
+      // (e.g. `referral`) still loads instead of crashing on a missing key.
+      if (saved) setFormData({ ...INITIAL_FORM_DATA, ...JSON.parse(saved) });
       if (savedStep) setStep(parseInt(savedStep, 10));
     } catch {
       // ignore parse errors
@@ -328,6 +381,7 @@ export default function OnboardingForm() {
   // Persist to localStorage on every change
   const updateForm = useCallback(
     (patch: Partial<RegistrationData>) => {
+      pdfStoredRef.current = false; // data changed, so any stored PDF is now stale
       setFormData((prev) => {
         const next = { ...prev, ...patch };
         try {
@@ -355,6 +409,14 @@ export default function OnboardingForm() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [step, hydrated]);
 
+  // The Submit button sits at the bottom of a long page but the error banner is at
+  // the top of the card, so bring the error into view or it looks like nothing happened.
+  useEffect(() => {
+    if (submitError) {
+      errorRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [submitError]);
+
   const next = useCallback(() => goTo(Math.min(step + 1, TOTAL_STEPS)), [step, goTo]);
   const back = useCallback(() => goTo(Math.max(step - 1, 1)), [step, goTo]);
 
@@ -372,70 +434,53 @@ export default function OnboardingForm() {
     setIsSubmitting(true);
     setSubmitError(null);
 
-    const flat = flattenForSubmit(formData);
-    const dogName = formData.dog.name || "dog";
-    const ownerName = `${formData.owner1.firstName} ${formData.owner1.surname}`.trim();
-
-    // ── 1. Generate the vet-auth PDF and upload it to the worker (non-blocking) ──
-    // A failure here must never prevent the FormSubmit email, which is the
-    // source of truth. We record the outcome and surface it in the email.
-    let pdfStored = false;
     try {
-      const pdf = await generateVetAuthPdf(formData);
-      const fileName = buildPdfFileName(formData);
-      pdfStored = await uploadVetAuthPdf(pdf, fileName, {
-        ownerFirstName: formData.owner1.firstName,
-        ownerSurname: formData.owner1.surname,
-        dog: dogName,
-      });
+      const flat = flattenForSubmit(formData);
+      const dogName = formData.dog.name || "dog";
+
+      // ── 1. Generate the vet-auth PDF and store it in R2 (non-blocking) ────────
+      // A failure here must never stop the registration being sent. The outcome
+      // is recorded in the "PDF stored" field so Katie can see it in the email.
+      let pdfStored = pdfStoredRef.current;
       if (!pdfStored) {
-        console.warn("Vet-auth PDF was not stored (worker unset or returned an error).");
+        try {
+          const pdf = await generateVetAuthPdf(formData);
+          const fileName = buildPdfFileName(formData);
+          pdfStored = await uploadVetAuthPdf(pdf, fileName, {
+            ownerFirstName: formData.owner1.firstName,
+            ownerSurname: formData.owner1.surname,
+            dog: dogName,
+          });
+          pdfStoredRef.current = pdfStored;
+          if (!pdfStored) {
+            console.warn("Vet-auth PDF was not stored (worker returned an error).");
+          }
+        } catch (err) {
+          console.warn("Vet-auth PDF generation failed:", err);
+        }
       }
-    } catch (err) {
-      console.warn("Vet-auth PDF generation failed:", err);
-    }
 
-    // ── 2. Send the flat JSON to Make (logs to Excel). Non-blocking. ─────────────
-    const record: Record<string, string> = {
-      ...flat,
-      "PDF stored": pdfStored ? "Yes" : "No",
-    };
-    const loggedToSheet = await sendToSheet(record);
-    if (!loggedToSheet) {
-      console.warn("Submission was not logged to the sheet (worker unset or returned an error).");
-    }
+      // ── 2. Send the registration ──────────────────────────────────────────────
+      // The worker emails Katie (full record attached as JSON), then logs it to
+      // Excel. Success is only reported once the email has gone out.
+      const record: Record<string, string> = {
+        ...flat,
+        "PDF stored": pdfStored ? "Yes" : "No",
+      };
+      const result = await submitRecord(record);
 
-    // ── 3. Send the FormSubmit email (source of truth) ──────────────────────────
-    const payload: Record<string, string> = {
-      _subject: `New Registration: ${dogName} — ${ownerName}`,
-      _captcha: "false",
-      _template: "table",
-      ...record,
-      "Logged to sheet": loggedToSheet ? "Yes" : "No",
-    };
-
-    try {
-      const res = await fetch("https://formsubmit.co/ajax/katies-k9s@hotmail.com", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (res.ok) {
+      if (result.ok) {
         try {
           localStorage.removeItem(STORAGE_KEY);
           localStorage.removeItem(STEP_KEY);
         } catch {}
         setSubmitted(true);
       } else {
-        setSubmitError(
-          "There was a problem submitting your form. Please try again or contact us directly."
-        );
+        setSubmitError(submitErrorMessage(result.kind));
       }
-    } catch {
-      setSubmitError(
-        "Unable to submit. Please check your internet connection and try again."
-      );
+    } catch (err) {
+      console.error("Unexpected error while submitting:", err);
+      setSubmitError(submitErrorMessage("server"));
     } finally {
       setIsSubmitting(false);
     }
@@ -507,7 +552,11 @@ export default function OnboardingForm() {
 
       <div className="bg-white rounded-2xl shadow-sm border border-stone-100 p-6 sm:p-8">
         {submitError && (
-          <div className="mb-4 bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700">
+          <div
+            ref={errorRef}
+            role="alert"
+            className="mb-4 bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700"
+          >
             {submitError}
           </div>
         )}

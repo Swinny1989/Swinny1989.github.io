@@ -1,9 +1,17 @@
 "use client";
 
-import { FormData, OwnerDetails, EmergencyContact } from "./types";
+import {
+  FormData,
+  OwnerDetails,
+  EmergencyContact,
+  ReferralDetails,
+  REFERRAL_OPTIONS,
+} from "./types";
 import {
   Field,
   Input,
+  Textarea,
+  ToggleGroup,
   SectionHeading,
   InfoBanner,
   StepNav,
@@ -147,6 +155,17 @@ export default function Step1OwnerDetails({
       emergencyContact: { ...data.emergencyContact, [field]: value },
     });
 
+  const updateReferral = (patch: Partial<ReferralDetails>) =>
+    onUpdate({ referral: { ...data.referral, ...patch } });
+
+  // One free-text box serves every answer, so the hint adapts to what was picked.
+  const referralPlaceholder =
+    data.referral.source === "Friend/relative"
+      ? "Who recommended us?"
+      : data.referral.source === "Other"
+        ? "Where did you hear about us?"
+        : "Anything you would like to add";
+
   const canContinue =
     data.owner1.firstName.trim() !== "" &&
     data.owner1.surname.trim() !== "" &&
@@ -240,6 +259,26 @@ export default function Step1OwnerDetails({
             onChange={(v) => updateEmergency("email", v)}
             type="email"
             autoComplete="section-emergency email"
+          />
+        </Field>
+      </div>
+
+      {/* Where did you hear about us — optional, does not block Continue */}
+      <div className="flex flex-col gap-4 mt-4">
+        <SectionHeading>Where did you hear about us?</SectionHeading>
+        <Field label="How did you find us?" hint="Optional">
+          <ToggleGroup
+            options={[...REFERRAL_OPTIONS]}
+            value={data.referral.source}
+            onChange={(v) => updateReferral({ source: v })}
+          />
+        </Field>
+        <Field label="Tell us more" hint="Optional">
+          <Textarea
+            value={data.referral.details}
+            onChange={(v) => updateReferral({ details: v })}
+            placeholder={referralPlaceholder}
+            rows={2}
           />
         </Field>
       </div>

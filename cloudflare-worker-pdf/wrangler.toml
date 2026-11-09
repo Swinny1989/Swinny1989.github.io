@@ -7,17 +7,22 @@ compatibility_date = "2024-11-01"
 [observability]
 enabled = true
 
-# Public var (not a secret) — the only browser origin allowed to POST.
+# Public config (not secrets).
 [vars]
+# The only browser origin allowed to POST.
 ALLOWED_ORIGIN = "https://katiesk9s.co.uk"
+# Where registration notification emails are delivered.
+EMAIL_TO = "katies-k9s@hotmail.com"
+# Sender. Must be on a domain verified in Resend (see README).
+EMAIL_FROM = "Katie's K9s <registrations@notifications.katiesk9s.co.uk>"
 
 # R2 bucket binding. Create the bucket first (see README), then deploy.
 [[r2_buckets]]
 binding = "R2_BUCKET"
 bucket_name = "katiesk9s-vet-auth"
 
-# ── Secret (do NOT put the value here) ───────────────────────────────────────
-# MAKE_WEBHOOK_URL — the Make.com webhook the worker forwards submissions to.
-# Set it with:
-#   wrangler secret put MAKE_WEBHOOK_URL
-# then paste the webhook URL when prompted.
+# ── Secrets (do NOT put values here) ─────────────────────────────────────────
+# Set each with `wrangler secret put <NAME>` and paste the value when prompted.
+#
+#   RESEND_API_KEY   — Resend API key used to email registrations to EMAIL_TO.
+#   MAKE_WEBHOOK_URL — Make.com webhook the worker forwards submissions to.

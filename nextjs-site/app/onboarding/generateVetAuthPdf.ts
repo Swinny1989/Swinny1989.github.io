@@ -26,9 +26,13 @@ const VET_AUTH_PARAGRAPHS = [
   "You acknowledge and agree that Katie's K9s accepts no responsibility for veterinary treatment, transportation or associated expenses, except where liability cannot legally be excluded or limited. You agree to be responsible for any costs incurred in connection with the transportation, examination or treatment of your dog(s).",
 ];
 
+// Round-pdf.png is a 300x300 copy of Round.png (the original is 4167px and takes
+// seconds to decode on a phone). To regenerate it if the logo changes:
+//   sharp("public/images/Round.png").resize(300, 300).png({ compressionLevel: 9 })
+//     .toFile("public/images/Round-pdf.png")
 async function loadLogoBase64(): Promise<string | null> {
   try {
-    const res = await fetch("/images/Round.png");
+    const res = await fetch("/images/Round-pdf.png");
     if (!res.ok) return null;
     const buf = await res.arrayBuffer();
     const bytes = new Uint8Array(buf);
