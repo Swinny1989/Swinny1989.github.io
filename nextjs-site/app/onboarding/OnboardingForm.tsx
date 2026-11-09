@@ -66,6 +66,10 @@ function flattenForSubmit(data: RegistrationData): Record<string, string> {
     "Emergency Contact Home Phone": d.emergencyContact.homePhone,
     "Emergency Contact Email": d.emergencyContact.email,
 
+    // Where they heard about us (optional)
+    "Heard About Us": d.referral.source,
+    "Heard About Us Details": d.referral.details,
+
     // Dog
     "Dog Name": d.dog.name,
     "Dog DOB": d.dog.dob,
@@ -285,6 +289,7 @@ const DEV_DEMO_DATA: Partial<RegistrationData> = {
     firstName: "Emergency", surname: "Contact",
     mobile: "07700 900111", homePhone: "", email: "ec@example.com",
   },
+  referral: { source: "Friend/relative", details: "Dev demo" },
   dog: {
     name: "Rex", dob: "2021-01-01", breed: "Labrador",
     sex: "Male", weightKg: "25", neutered: "Yes",
@@ -363,7 +368,9 @@ export default function OnboardingForm() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       const savedStep = localStorage.getItem(STEP_KEY);
-      if (saved) setFormData(JSON.parse(saved));
+      // Merge over the defaults so progress saved before a new field existed
+      // (e.g. `referral`) still loads instead of crashing on a missing key.
+      if (saved) setFormData({ ...INITIAL_FORM_DATA, ...JSON.parse(saved) });
       if (savedStep) setStep(parseInt(savedStep, 10));
     } catch {
       // ignore parse errors

@@ -140,11 +140,28 @@ export interface SignatureDetails {
   owner1SignedDate: string;
 }
 
+// "Where did you hear about us?" — optional. `details` is a free-text box that
+// applies to any answer (e.g. which friend, or what "Other" means).
+export const REFERRAL_OPTIONS = [
+  "Facebook",
+  "Instagram",
+  "Google search",
+  "Friend/relative",
+  "Other",
+] as const;
+export type ReferralSource = (typeof REFERRAL_OPTIONS)[number];
+
+export interface ReferralDetails {
+  source: ReferralSource | "";
+  details: string;
+}
+
 export interface FormData {
   owner1: OwnerDetails;
   hasOwner2: boolean;
   owner2: OwnerDetails;
   emergencyContact: EmergencyContact;
+  referral: ReferralDetails;
   dog: DogDetails;
   health: HealthDetails;
   vet: VetDetails;
@@ -184,6 +201,7 @@ export const INITIAL_FORM_DATA: FormData = {
   hasOwner2: false,
   owner2: { ...EMPTY_OWNER },
   emergencyContact: { ...EMPTY_EMERGENCY },
+  referral: { source: "", details: "" },
   dog: {
     name: "",
     dob: "",
